@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/AntDesign";
 import styles from "./style";
+import { SignIn } from "../../services/auth";
+import AuthContext from "../../context/auth";
 
 function Login({ navigation }) {
+    const { signed, signIn, user } = useContext(AuthContext);
+    const [entryBtn, setEntryBtn] = useState("Entrar");
+    console.log("Status atual do usuario");
+    console.log(signed);
+    console.log(user);
+
+    function handleSign() {
+        setEntryBtn("Aguarde...");
+        signIn();
+        console.log(user);
+        if (user !== null) {
+            navigation.push("Home");
+        }
+    }
+
+    async function handleLogin() {
+        //email, password
+        const response = await SignIn();
+        console.log(response);
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Login</Text>
@@ -46,9 +68,10 @@ function Login({ navigation }) {
             <View style={styles.buttonView}>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => navigation.push("Logo")}
+                    onPress={handleSign}
+                    //onPress={() => navigation.push("Logo")}
                 >
-                    <Text style={styles.textButton}>Entrar</Text>
+                    <Text style={styles.textButton}>{entryBtn}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttonRegister}

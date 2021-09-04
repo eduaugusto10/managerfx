@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text } from "react-native";
-import styles from './style'
+import styles from "./style";
+
+import AuthContext from "../../context/auth";
 
 function Home() {
+    const { user } = useContext(AuthContext);
     return (
-        <View style={styles.container}
-            
-        >
-            <Text>Home Screen</Text>
+        <View style={styles.container}>
+            <Text>Olá, {user.name}</Text>
         </View>
     );
 }
