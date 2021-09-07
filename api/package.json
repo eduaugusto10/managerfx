@@ -1,0 +1,19 @@
+{
+    "name": "api",
+    "version": "1.0.0",
+    "description": "API to app ManagerFX",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon index.js"
+    },
+    "author": "Eduardo Augusto Gomes de Oliveira",
+    "license": "ISC",
+    "devDependencies": {
+        "nodemon": "^2.0.12",
+        "sucrase": "^3.20.1"
+    },
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
