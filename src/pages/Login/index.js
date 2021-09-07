@@ -60,7 +60,7 @@ function Login({ navigation }) {
                 </View>
                 <TouchableOpacity
                     style={styles.buttonRegister}
-                    onPress={() => navigation.push("Home")}
+                    onPress={() => navigation.push("ForgotPassword")}
                 >
                     <Text style={styles.textRegister}>Esqueci minha senha</Text>
                 </TouchableOpacity>

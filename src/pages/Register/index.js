@@ -18,7 +18,7 @@ function Register({ navigation }) {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="ID ou CPF"
+                        placeholder="Primeiro Nome"
                         placeholderTextColor="#FFFFFF"
                     />
                 </View>
@@ -31,7 +31,33 @@ function Register({ navigation }) {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="ID ou CPF"
+                        placeholder="Último Nome"
+                        placeholderTextColor="#FFFFFF"
+                    />
+                </View>
+                <View style={styles.inputView}>
+                    <Icons
+                        //style={styles.searchIcon}
+                        name="lock"
+                        size={30}
+                        color="#FFFFFF"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="ID"
+                        placeholderTextColor="#FFFFFF"
+                    />
+                </View>
+                <View style={styles.inputView}>
+                    <Icons
+                        //style={styles.searchIcon}
+                        name="lock"
+                        size={30}
+                        color="#FFFFFF"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="E-mail"
                         placeholderTextColor="#FFFFFF"
                     />
                 </View>
@@ -58,7 +84,7 @@ function Register({ navigation }) {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Confirme a Senha"
+                        placeholder="Confirmar Senha"
                         placeholderTextColor="#FFFFFF"
                         secureTextEntry={true}
                     />

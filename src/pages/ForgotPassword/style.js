@@ -7,7 +7,50 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    text:{
-        color:"#FFFFFF"
+    text: {
+        color: "#FFFFFF",
+        fontSize: 18,
+    },
+    input: {
+        color: "#FFFFFF",
+        paddingLeft: 10,
+        fontSize: 18,
+    },
+    inputView: {
+        borderBottomWidth: 1.0,
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        borderBottomColor: "#FFFFFF",
+        width: 292,
+        paddingTop: 20,
+        paddingBottom: 10,
+    },
+    button: {
+        backgroundColor: "#F7941D",
+        width: 193,
+        height: 47,
+        borderRadius: 6,
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 58,
+    },
+    textButton: {
+        fontSize: 20,
+        color: "#FFFFFF",
+    },
+    textRegister: {
+        color: "#F7941D",
+        fontSize: 16,
+        paddingTop:10
+    },
+    buttonRegister: {
+        marginTop: 5,
+    },
+    buttonView: {
+        alignItems: "center",
+    },
+    containerInput: {
+        alignItems: "flex-end",
     }
 });
