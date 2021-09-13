@@ -15,6 +15,11 @@ function Router() {
         
             <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen
+                    name="Logo"
+                    component={Logo}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
                     name="Login"
                     component={Login}
                     options={{ headerShown: false }}

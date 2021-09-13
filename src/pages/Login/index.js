@@ -1,24 +1,71 @@
 import React, { useContext, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
-import Icons from "react-native-vector-icons/AntDesign";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
 import styles from "./style";
 import { SignIn } from "../../services/auth";
 import AuthContext from "../../context/auth";
+import api from "../../services/api";
 
 function Login({ navigation }) {
     const { signed, signIn, user } = useContext(AuthContext);
     const [entryBtn, setEntryBtn] = useState("Entrar");
-    console.log("Status atual do usuario");
-    console.log(signed);
-    console.log(user);
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [token, setToken] = useState();
+
+    const storeData = async (value) => {
+        try {
+            await AsyncStorage.setItem("@token_managerfx", value);
+        } catch (e) {
+            // saving error
+        }
+    };
+
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem("@token_managerfx");
+            if (value !== null) {
+                console.log("Resultado do token");
+                console.log(value);
+            }
+        } catch (e) {
+            // error reading value
+        }
+    };
+    async function handleSignInPress() {
+        if (email.length === 0 || password.length === 0) {
+            console.log("Insira usuario e senha");
+        } else {
+            try {
+                await api
+                    .post("/sessions", {
+                        email: email,
+                        password: password,
+                    })
+                    .then(function (response) {
+                        setToken(response.data.token);
+                        console.log(response.data.token);
+                    });
+
+                if (token !== null) {
+                    storeData(token);
+                    getData;
+                    signIn();
+                    //navigation.push("Home");
+                }
+            } catch (_err) {
+                console.log("Erro usuario e senha");
+                console.log(_err);
+            }
+        }
+    }
 
     function handleSign() {
         setEntryBtn("Aguarde...");
-        signIn();
         console.log(user);
         if (user !== null) {
-            navigation.push("Home");
+            signIn();
+            //navigation.push("Home");
         }
     }
 
@@ -29,12 +76,17 @@ function Login({ navigation }) {
     }
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Login</Text>
+            <View style={styles.containerLogo}>
+                <Image
+                    style={styles.logo}
+                    source={require("../../assets/logo_branco.png")}
+                />
+            </View>
             <View style={styles.containerInput}>
                 <View style={styles.inputView}>
                     <Icon
                         //style={styles.searchIcon}
-                        name="person-outline"
+                        name="user"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -42,10 +94,12 @@ function Login({ navigation }) {
                         style={styles.input}
                         placeholder="ID ou CPF"
                         placeholderTextColor="#FFFFFF"
+                        value={email}
+                        onChangeText={(e) => setEmail(e)}
                     />
                 </View>
                 <View style={styles.inputView}>
-                    <Icons
+                    <Icon
                         //style={styles.searchIcon}
                         name="lock"
                         size={30}
@@ -56,20 +110,23 @@ function Login({ navigation }) {
                         placeholder="Senha"
                         placeholderTextColor="#FFFFFF"
                         secureTextEntry={true}
+                        value={password}
+                        onChangeText={(e) => setPassword(e)}
                     />
                 </View>
                 <TouchableOpacity
                     style={styles.buttonRegister}
                     onPress={() => navigation.push("ForgotPassword")}
                 >
-                    <Text style={styles.textRegister}>Esqueci minha senha</Text>
+                    <Text style={styles.textForgotPassword}>
+                        Esqueci minha senha
+                    </Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonView}>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={handleSign}
-                    //onPress={() => navigation.push("Logo")}
+                    onPress={handleSignInPress}
                 >
                     <Text style={styles.textButton}>{entryBtn}</Text>
                 </TouchableOpacity>

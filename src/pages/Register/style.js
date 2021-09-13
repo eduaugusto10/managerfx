@@ -52,5 +52,13 @@ export default StyleSheet.create({
     },
     containerInput: {
         alignItems: "flex-end",
-    }
+    },
+    logo: {
+        width: 180,
+        height: 63,
+    },
+    containerLogo: {
+        marginTop: 50,
+        marginBottom: 20,
+    },
 });

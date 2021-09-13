@@ -40,9 +40,14 @@ export default StyleSheet.create({
         color: "#FFFFFF",
     },
     textRegister: {
+        color: "#FFFFFF",
+        fontSize: 16,
+        paddingTop: 10,
+    },
+    textForgotPassword: {
         color: "#F7941D",
         fontSize: 16,
-        paddingTop:10
+        paddingTop: 10,
     },
     buttonRegister: {
         marginTop: 5,
@@ -52,5 +57,12 @@ export default StyleSheet.create({
     },
     containerInput: {
         alignItems: "flex-end",
-    }
+    },
+    logo: {
+        width: 180,
+        height: 63,
+    },
+    containerLogo: {
+        marginBottom: 50,
+    },
 });

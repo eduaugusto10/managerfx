@@ -1,31 +1,22 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import Icons from "react-native-vector-icons/AntDesign";
 import styles from "./style";
 
 function ForgotPassword({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Registre-se</Text>
+            <View style={styles.containerLogo}>
+                <Image
+                    style={styles.logo}
+                    source={require("../../assets/logo_branco.png")}
+                />
+            </View>
             <View style={styles.containerInput}>
                 <View style={styles.inputView}>
                     <Icons
                         //style={styles.searchIcon}
-                        name="lock"
-                        size={30}
-                        color="#FFFFFF"
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="E-mail"
-                        placeholderTextColor="#FFFFFF"
-                    />
-                </View>
-                <View style={styles.inputView}>
-                    <Icons
-                        //style={styles.searchIcon}
-                        name="lock"
+                        name="questioncircleo"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -39,7 +30,7 @@ function ForgotPassword({ navigation }) {
                 <View style={styles.inputView}>
                     <Icons
                         //style={styles.searchIcon}
-                        name="lock"
+                        name="exclamationcircleo"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -49,7 +40,7 @@ function ForgotPassword({ navigation }) {
                         placeholderTextColor="#FFFFFF"
                         secureTextEntry={true}
                     />
-                </View>                
+                </View>
                 <View style={styles.inputView}>
                     <Icons
                         //style={styles.searchIcon}
@@ -77,7 +68,7 @@ function ForgotPassword({ navigation }) {
                         placeholderTextColor="#FFFFFF"
                         secureTextEntry={true}
                     />
-                </View>                
+                </View>
             </View>
             <View style={styles.buttonView}>
                 <TouchableOpacity

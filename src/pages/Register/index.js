@@ -1,18 +1,22 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
-import Icons from "react-native-vector-icons/AntDesign";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
 import styles from "./style";
 
 function Register({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Registre-se</Text>
+            <View style={styles.containerLogo}>
+                <Image
+                    style={styles.logo}
+                    source={require("../../assets/logo_branco.png")}
+                />
+            </View>
             <View style={styles.containerInput}>
                 <View style={styles.inputView}>
                     <Icon
                         //style={styles.searchIcon}
-                        name="person-outline"
+                        name="user"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -25,7 +29,7 @@ function Register({ navigation }) {
                 <View style={styles.inputView}>
                     <Icon
                         //style={styles.searchIcon}
-                        name="person-outline"
+                        name="user"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -36,9 +40,9 @@ function Register({ navigation }) {
                     />
                 </View>
                 <View style={styles.inputView}>
-                    <Icons
+                    <Icon
                         //style={styles.searchIcon}
-                        name="lock"
+                        name="user"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -49,9 +53,9 @@ function Register({ navigation }) {
                     />
                 </View>
                 <View style={styles.inputView}>
-                    <Icons
+                    <Icon
                         //style={styles.searchIcon}
-                        name="lock"
+                        name="mail"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -62,7 +66,7 @@ function Register({ navigation }) {
                     />
                 </View>
                 <View style={styles.inputView}>
-                    <Icons
+                    <Icon
                         //style={styles.searchIcon}
                         name="lock"
                         size={30}
@@ -76,7 +80,7 @@ function Register({ navigation }) {
                     />
                 </View>
                 <View style={styles.inputView}>
-                    <Icons
+                    <Icon
                         //style={styles.searchIcon}
                         name="lock"
                         size={30}
@@ -90,9 +94,9 @@ function Register({ navigation }) {
                     />
                 </View>
                 <View style={styles.inputView}>
-                    <Icons
+                    <Icon
                         //style={styles.searchIcon}
-                        name="lock"
+                        name="questioncircleo"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -104,9 +108,9 @@ function Register({ navigation }) {
                     />
                 </View>
                 <View style={styles.inputView}>
-                    <Icons
+                    <Icon
                         //style={styles.searchIcon}
-                        name="lock"
+                        name="exclamationcircleo"
                         size={30}
                         color="#FFFFFF"
                     />
@@ -123,7 +127,7 @@ function Register({ navigation }) {
                     style={styles.button}
                     onPress={() => navigation.push("Logo")}
                 >
-                    <Text style={styles.textButton}>Registrar</Text>
+                    <Text style={styles.textButton}>Confirmar</Text>
                 </TouchableOpacity>
             </View>
         </View>
