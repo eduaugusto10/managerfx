@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Icon from "react-native-vector-icons/AntDesign";
 import Home from "../pages/Home";
+import Wallet from "../pages/Wallet";
+import Evolution from "../pages/Evolution";
 
 const Stack = createBottomTabNavigator();
 
@@ -14,26 +16,26 @@ function Router() {
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if(route.name === 'Home'){
-                        iconName = focused ? 'home': 'home';
-                    }else if(route.name ==='Evolução'){
-                        iconName = focused ? 'barschart': 'barschart';
-                    }else if(route.name ==='Carteira'){
-                        iconName = focused ? 'wallet': 'wallet';
-                    }else if(route.name ==='Perfil'){
-                        iconName = focused ? 'user': 'user';
+                    if (route.name === "Home") {
+                        iconName = focused ? "home" : "home";
+                    } else if (route.name === "Evolução") {
+                        iconName = focused ? "barschart" : "barschart";
+                    } else if (route.name === "Carteira") {
+                        iconName = focused ? "wallet" : "wallet";
+                    } else if (route.name === "Perfil") {
+                        iconName = focused ? "user" : "user";
                     }
-                    return <Icon name={iconName} size={size} color={color}/>
+                    return <Icon name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: 'tomato',
-                tabBarInactiveTintColor:'#FFFFFF',
-                tabBarActiveBackgroundColor:'#245CA0',
-                tabBarInactiveBackgroundColor:'#245CA0'
+                tabBarActiveTintColor: "tomato",
+                tabBarInactiveTintColor: "#FFFFFF",
+                tabBarActiveBackgroundColor: "#245CA0",
+                tabBarInactiveBackgroundColor: "#245CA0",
             })}
         >
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Evolução" component={Home} />
-            <Stack.Screen name="Carteira" component={Home} />
+            <Stack.Screen name="Evolução" component={Evolution} />
+            <Stack.Screen name="Carteira" component={Wallet} />
             <Stack.Screen name="Perfil" component={Home} />
         </Stack.Navigator>
     );

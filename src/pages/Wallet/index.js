@@ -1,20 +1,22 @@
 import React, { useContext } from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { View, Text } from "react-native";
 import styles from "./style";
+import OrdersClose from "../OrdersClose";
+import OrdersOpen from "../OrdersOpen";
+import Extract from "../BankStatement";
 
-import AuthContext from "../../context/auth";
-import LineChartExample from "../../components/Graph";
+//import AuthContext from "../../context/auth";
+const TabTop = createMaterialTopTabNavigator();
 
-function Home() {
-    const { user } = useContext(AuthContext);
+function Wallet() {
     return (
-        <View style={styles.container}>
-            <Text>Olá, {user.name}</Text>
-            <View>
-                <LineChartExample />
-            </View>
-        </View>
+        <TabTop.Navigator>
+            <TabTop.Screen name="Ordens Abertas" component={OrdersOpen} />
+            <TabTop.Screen name="Ordens Fechadas" component={OrdersClose} />
+            <TabTop.Screen name="Extrato" component={Extract} />
+        </TabTop.Navigator>
     );
 }
 
-export default Home;
+export default Wallet;

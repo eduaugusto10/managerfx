@@ -60,20 +60,6 @@ function Login({ navigation }) {
         }
     }
 
-    function handleSign() {
-        setEntryBtn("Aguarde...");
-        console.log(user);
-        if (user !== null) {
-            signIn();
-            //navigation.push("Home");
-        }
-    }
-
-    async function handleLogin() {
-        //email, password
-        const response = await SignIn();
-        console.log(response);
-    }
     return (
         <View style={styles.container}>
             <View style={styles.containerLogo}>
