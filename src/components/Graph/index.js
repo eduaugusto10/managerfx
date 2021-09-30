@@ -12,17 +12,17 @@ export function AreaChartExample() {
     const screenWidth = Dimensions.get('window').width
     
     return (
-        <View>
-            <Text>Bezier Line Chart</Text>
+        <View style={{alignContent:"center", alignItems:"center"}}>
+            <Text>GANHO ACUMULADO</Text>
             <LineChart
                 data={{
                     labels: [
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
+                        "Janeiro",
+                        "Fevereiro",
+                        "Março",
+                        "Abril",
+                        "Maio",
+                        "Junho",
                     ],
                     datasets: [
                         {
@@ -37,22 +37,33 @@ export function AreaChartExample() {
                         },
                     ],
                 }}
-                width={Dimensions.get("window").width} // from react-native
+                width={Dimensions.get("window").width-15} // from react-native
                 height={220}
                 chartConfig={{
-                    backgroundColor: "#e26a00",
-                    backgroundGradientFrom: "#fb8c00",
-                    backgroundGradientTo: "#ffa726",
+                    backgroundColor: "#FFF",
+                    backgroundGradientFrom: "#FFF",
+                    backgroundGradientTo: "#FFF",
                     decimalPlaces: 2, // optional, defaults to 2dp
-                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                     style: {
                         borderRadius: 16,
+                        
                     },
                 }}
                 bezier
                 style={{
-                    marginVertical: 8,
-                    borderRadius: 16,
+                    marginVertical: 8,                    
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderColor: '#ddd',                    
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.8,
+                    shadowRadius: 2,
+                    elevation: 1,
+                    marginLeft: 5,
+                    marginRight: 5,
+                    marginTop: 10,
                 }}
             />
         </View>

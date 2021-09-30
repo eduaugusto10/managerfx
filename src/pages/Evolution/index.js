@@ -9,8 +9,12 @@ function Evolution() {
     const { user } = useContext(AuthContext);
     return (
         <View style={styles.container}>
-            <Text>Olá, {user.name}</Text>
-
+            <View style={styles.card}>
+                <LineChartExample />
+            </View>
+            <View>
+                <LineChartExample />
+            </View>
         </View>
     );
 }

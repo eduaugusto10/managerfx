@@ -33,28 +33,26 @@ function OrdersClose() {
                 <View>
                     <Text style={styles.title}>{item.symbol}</Text>
                     <Text style={styles.title}>
-                        {item.operation_type > 0 ? "Buy" : "Sell"}
+                        {item.operation_type > 0 ? "BUY" : "SELL"}
                     </Text>
-                    <Text style={styles.title}>Share</Text>
-                    <Text style={styles.title}>14,79%</Text>
+                    <Text style={styles.title3}>Share</Text>
+                    <Text style={styles.title2}>14,79%</Text>
                 </View>
-                <View>
+                <View style={styles.columncenter}>
                     <Text style={styles.title}>Dt Abertura</Text>
-                    <Text style={styles.title}>{Days(item.date_open)}</Text>
-                    <Text style={styles.title}>Dt Fechamento</Text>
+                    <Text style={styles.title2}>{Days(item.date_open)}</Text>
+                    <Text style={styles.title3}>Dt Fechamento</Text>
                     <Text style={styles.title}>{Days(item.date_close)}</Text>
+                    <Text style={styles.title3}>Lucro Fundo</Text>
+                    <Text style={styles.title2}>$ {item.return_profit}</Text>
                 </View>
                 <View>
-                    <Text style={styles.title}>Tx Performance</Text>
-                    <Text style={styles.title}>$ 0,00</Text>
-                    <Text style={styles.title}>Tx Plataforma</Text>
-                    <Text style={styles.title}>$ 0,00</Text>
-                </View>
-                <View>
-                    <Text style={styles.title}>Lucro Gerente</Text>
-                    <Text style={styles.title}>$ {item.return_profit}</Text>
                     <Text style={styles.title}>Lucro Investidor</Text>
                     <Text style={styles.title}>$ {item.return_profit}</Text>
+                    <Text style={styles.title3}>Tx Performance</Text>
+                    <Text style={styles.title2}>$ 0,00</Text>
+                    <Text style={styles.title3}>Tx Plataforma</Text>
+                    <Text style={styles.title2}>$ 0,00</Text>
                 </View>
             </View>
         </TouchableOpacity>

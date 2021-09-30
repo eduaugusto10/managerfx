@@ -75,7 +75,7 @@ function ForgotPassword({ navigation }) {
                     style={styles.button}
                     onPress={() => navigation.push("Logo")}
                 >
-                    <Text style={styles.textButton}>Alterar</Text>
+                    <Text style={styles.textButton}>Confirmar</Text>
                 </TouchableOpacity>
             </View>
         </View>

@@ -10,9 +10,10 @@ function Login({ navigation }) {
     const { signed, signIn, user } = useContext(AuthContext);
     const [entryBtn, setEntryBtn] = useState("Entrar");
     const [email, setEmail] = useState();
+    const [emailText, setEmailText] = useState("ID");
     const [password, setPassword] = useState();
+    const [passwordText, setPasswordText] = useState("Senha");
     const [token, setToken] = useState();
-
     const storeData = async (value) => {
         try {
             await AsyncStorage.setItem("@token_managerfx", value);
@@ -37,6 +38,7 @@ function Login({ navigation }) {
             console.log("Insira usuario e senha");
         } else {
             try {
+                setEntryBtn("Aguarde...");
                 await api
                     .post("/sessions", {
                         email: email,
@@ -56,6 +58,11 @@ function Login({ navigation }) {
             } catch (_err) {
                 console.log("Erro usuario e senha");
                 console.log(_err);
+                setEmail("");
+                setEmailText("ID ou senha inválida");
+                setPassword("");
+                setPasswordText("ID ou senha inválida");
+                setEntryBtn("Entrar");
             }
         }
     }
@@ -78,7 +85,7 @@ function Login({ navigation }) {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="ID ou CPF"
+                        placeholder={emailText}
                         placeholderTextColor="#FFFFFF"
                         value={email}
                         onChangeText={(e) => setEmail(e)}
@@ -93,7 +100,7 @@ function Login({ navigation }) {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Senha"
+                        placeholder={passwordText}
                         placeholderTextColor="#FFFFFF"
                         secureTextEntry={true}
                         value={password}

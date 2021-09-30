@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import Home from "../pages/Home";
 import Wallet from "../pages/Wallet";
 import Evolution from "../pages/Evolution";
+import Settings from "../pages/Settings";
 
 const Stack = createBottomTabNavigator();
 
@@ -27,16 +28,16 @@ function Router() {
                     }
                     return <Icon name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: "tomato",
-                tabBarInactiveTintColor: "#FFFFFF",
+                tabBarActiveTintColor: "#FFFFFF",
+                tabBarInactiveTintColor: "#F7941D99",
                 tabBarActiveBackgroundColor: "#245CA0",
                 tabBarInactiveBackgroundColor: "#245CA0",
             })}
         >
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
             <Stack.Screen name="Evolução" component={Evolution} />
             <Stack.Screen name="Carteira" component={Wallet} />
-            <Stack.Screen name="Perfil" component={Home} />
+            <Stack.Screen name="Perfil" component={Settings} />
         </Stack.Navigator>
     );
 }
