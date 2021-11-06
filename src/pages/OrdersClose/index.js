@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import styles from "./style";
 import AuthContext from "../../context/auth";
@@ -10,18 +10,22 @@ function OrdersClose() {
     const [data, setData] = useState();
     const [selectedId, setSelectedId] = useState(null);
 
-    async function apiOrdersClose() {
-        try {
-            await api.get("/operationsave").then(function (response) {
-                setData(response.data);
-                console.log(response.data);
-            });
-        } catch (_err) {
-            console.log(_err);
+    useEffect(() => {
+        async function apiOrdersClose() {
+            try {
+                await api.get("/operationsave").then(function (response) {
+                    setData(response.data);
+                    console.log(response.data);
+                });
+            } catch (_err) {
+                console.log(_err);
+            }
         }
-    }
+        apiOrdersClose();
+    }, []);
 
     function Days(days) {
+        console.log(days);
         let newDays = new Date(days);
         newDays = format(newDays, "yyyy.MM.dd");
         return newDays;
@@ -72,10 +76,6 @@ function OrdersClose() {
 
     return (
         <View style={styles.container}>
-            <Text>Load</Text>
-            <TouchableOpacity onPress={apiOrdersClose} style={styles.item}>
-                <Text style={styles.title}>Carregar Itens</Text>
-            </TouchableOpacity>
             <FlatList
                 data={data}
                 renderItem={renderItem}
