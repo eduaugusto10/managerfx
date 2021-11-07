@@ -34,7 +34,6 @@ function Home() {
                                 ) + totalCapital;
                         }
                     }
-                    console.log("Tamanho do array: ", totalCapital);
                     setCapitalInvestido(totalCapital);
                     setLucro(saldo - totalCapital);
                 });
@@ -47,7 +46,7 @@ function Home() {
                 await api
                     .get("/operation/id_cliente=1163&id_adm=1140")
                     .then(function (response) {
-                        setOrderOpen(response.data);
+                        setOrderOpen(response.data.equity);
                     });
             } catch (_err) {
                 console.log(_err);
@@ -103,29 +102,21 @@ function Home() {
             <View style={styles.cards}>
                 <View style={styles.cardBlue}>
                     <Text style={styles.textWhite}>Balance</Text>
-                    <Text
-                        style={{
-                            fontSize: 26,
-                            color: "white",
-                            textAlign: "center",
-                        }}
-                    >
-                        ${saldo}
-                    </Text>
+                    <Text style={styles.textWhiteValue}>${saldo}</Text>
                 </View>
                 <View style={styles.cardBlue}>
                     <Text style={styles.textWhite}>Capital Líquido</Text>
-                    <Text style={styles.textWhite}>${capitalCalculated()}</Text>
+                    <Text style={styles.textWhiteValue}>${capitalCalculated()}</Text>
                 </View>
             </View>
             <View style={styles.cards}>
                 <View style={styles.cardBlue}>
                     <Text style={styles.textWhite}>Lucro Líquido</Text>
-                    <Text style={styles.textWhite}>${lucro.toFixed(2)}</Text>
+                    <Text style={styles.textGain}>${lucro.toFixed(2)}</Text>
                 </View>
                 <View style={styles.cardWhite}>
                     <Text style={styles.textBlue}>Valor Aplicado</Text>
-                    <Text style={styles.textBlue}>
+                    <Text style={styles.textBlueValue}>
                         ${capitalInvestido.toFixed(2)}
                     </Text>
                 </View>
@@ -133,14 +124,16 @@ function Home() {
             <View style={styles.cards}>
                 <View style={styles.cardWhite}>
                     <Text style={styles.textBlue}>Ordens Abertas</Text>
-                    <Text style={styles.textBlue}>${orderOpen.toFixed(2)}</Text>
+                    <Text style={styles.textComission}>${orderOpen.toFixed(2)}</Text>
                 </View>
                 <View style={styles.cardWhite}>
                     <Text style={styles.textBlue}>Custos e Comissões</Text>
-                    <Text style={styles.textBlue}>${comission.toFixed(2)}</Text>
+                    <Text style={styles.textComission}>
+                        ${comission.toFixed(2)}
+                    </Text>
                 </View>
             </View>
-            <LineChartExample />
+            <LineChartExample text="GANHO ACUMULADO"/>
         </View>
     );
 }

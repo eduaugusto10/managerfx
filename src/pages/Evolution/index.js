@@ -10,10 +10,10 @@ function Evolution() {
     return (
         <View style={styles.container}>
             <View style={styles.card}>
-                <LineChartExample />
+                <LineChartExample text={"GANHO ACUMULADO"}/>
             </View>
             <View>
-                <LineChartExample />
+                <LineChartExample text={"GANHO MENSAL"}/>
             </View>
         </View>
     );

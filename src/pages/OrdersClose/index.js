@@ -8,14 +8,16 @@ import { format } from "date-fns";
 function OrdersClose() {
     const { user } = useContext(AuthContext);
     const [data, setData] = useState();
+    const [dataII, setDataII] = useState(undefined);
     const [selectedId, setSelectedId] = useState(null);
 
     useEffect(() => {
         async function apiOrdersClose() {
             try {
-                await api.get("/operationsave").then(function (response) {
-                    setData(response.data);
-                    console.log(response.data);
+                await api.get("close/1163").then(function (response) {
+                    setData(response.data.balance.data);
+                    setDataII(response.data.close);
+                    console.log(response.data.close);
                 });
             } catch (_err) {
                 console.log(_err);
@@ -30,29 +32,77 @@ function OrdersClose() {
         newDays = format(newDays, "yyyy.MM.dd");
         return newDays;
     }
-
+    function Symbol(tickets) {
+        console.log(tickets);
+        for (let i = 0; i < data.length; i++) {
+            if (tickets == dataII[i].order_id) {
+                return dataII[i].symbol;
+            }
+        }
+        return null;
+    }
+    function DateClose(tickets) {
+        console.log(tickets);
+        for (let i = 0; i < data.length; i++) {
+            if (tickets == dataII[i].order_id) {
+                
+                return Days(dataII[i].date);
+            }
+        }
+        return null;
+    }
+    function TypeOperation(tickets) {
+        console.log(tickets);
+        for (let i = 0; i < data.length; i++) {
+            if (tickets == dataII[i].order_id) {
+                return dataII[i].operation_type;
+            }
+        }
+        return null;
+    }
     const Item = ({ item, onPress, style }) => (
         <TouchableOpacity onPress={onPress} style={styles.item}>
             <View style={styles.card}>
                 <View>
-                    <Text style={styles.title}>{item.symbol}</Text>
                     <Text style={styles.title}>
-                        {item.operation_type > 0 ? "BUY" : "SELL"}
+                        {dataII != undefined ? Symbol(item.ticket) : null}
+                    </Text>
+                    <Text
+                        style={
+                            TypeOperation(item.ticket) > 0
+                                ? styles.buy
+                                : styles.sell
+                        }
+                    >
+                        {TypeOperation(item.ticket) > 0 ? "BUY" : "SELL"}
                     </Text>
                     <Text style={styles.title3}>Share</Text>
-                    <Text style={styles.title2}>14,79%</Text>
+                    <Text style={styles.title2}>
+                        {(parseFloat(item.percentual) * 100).toFixed(2)}%
+                    </Text>
                 </View>
                 <View style={styles.columncenter}>
                     <Text style={styles.title}>Dt Abertura</Text>
-                    <Text style={styles.title2}>{Days(item.date_open)}</Text>
+                    <Text style={styles.title2}>
+                        {DateClose(item.ticket)}
+                    </Text>
                     <Text style={styles.title3}>Dt Fechamento</Text>
-                    <Text style={styles.title}>{Days(item.date_close)}</Text>
+                    <Text style={styles.title}>
+                        {Days(item.date_operation)}
+                    </Text>
                     <Text style={styles.title3}>Lucro Fundo</Text>
-                    <Text style={styles.title2}>$ {item.return_profit}</Text>
+                    <Text style={styles.title2}>
+                        ${" "}
+                        {(
+                            parseFloat(item.lucro) / parseFloat(item.percentual)
+                        ).toFixed(2)}
+                    </Text>
                 </View>
                 <View>
                     <Text style={styles.title}>Lucro Investidor</Text>
-                    <Text style={styles.title}>$ {item.return_profit}</Text>
+                    <Text style={item.lucro > 0 ? styles.buy : styles.sell}>
+                        $ {item.lucro}
+                    </Text>
                     <Text style={styles.title3}>Tx Performance</Text>
                     <Text style={styles.title2}>$ 0,00</Text>
                     <Text style={styles.title3}>Tx Plataforma</Text>

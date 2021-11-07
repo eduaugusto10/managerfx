@@ -7,13 +7,16 @@ import {
     ProgressChart,
     ContributionGraph,
 } from "expo-chart-kit";
+import styles from "./style";
 
-export function AreaChartExample() {
-    const screenWidth = Dimensions.get('window').width
-    
+export function AreaChartExample(props) {
+    const screenWidth = Dimensions.get("window").width;
+
     return (
-        <View style={{alignContent:"center", alignItems:"center"}}>
-            <Text>GANHO ACUMULADO</Text>
+        <View style={styles.container}>
+            <View style={styles.card}>
+                <Text style={styles.title}>{props.text}</Text>
+            </View>
             <LineChart
                 data={{
                     labels: [
@@ -37,7 +40,7 @@ export function AreaChartExample() {
                         },
                     ],
                 }}
-                width={Dimensions.get("window").width-15} // from react-native
+                width={Dimensions.get("window").width - 15} // from react-native
                 height={220}
                 chartConfig={{
                     backgroundColor: "#FFF",
@@ -47,16 +50,15 @@ export function AreaChartExample() {
                     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
                     style: {
                         borderRadius: 16,
-                        
                     },
                 }}
                 bezier
                 style={{
-                    marginVertical: 8,                    
+                    marginVertical: 8,
                     borderWidth: 1,
                     borderRadius: 5,
-                    borderColor: '#ddd',                    
-                    shadowColor: '#000',
+                    borderColor: "#ddd",
+                    shadowColor: "#000",
                     shadowOffset: { width: 0, height: 2 },
                     shadowOpacity: 0.8,
                     shadowRadius: 2,

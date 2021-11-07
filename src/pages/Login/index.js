@@ -10,9 +10,9 @@ function Login({ navigation }) {
     const { signed, signIn, user } = useContext(AuthContext);
     const [entryBtn, setEntryBtn] = useState("Entrar");
     const [email, setEmail] = useState();
-    const [emailText, setEmailText] = useState("ID");
+    const [emailText, setEmailText] = useState("Insira seu ID");
     const [password, setPassword] = useState();
-    const [passwordText, setPasswordText] = useState("Senha");
+    const [passwordText, setPasswordText] = useState("Insira sua senha");
     const [token, setToken] = useState();
     const storeData = async (value) => {
         try {
