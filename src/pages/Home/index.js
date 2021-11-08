@@ -6,9 +6,9 @@ import AuthContext from "../../context/auth";
 import LineChartExample from "../../components/Graph";
 
 function Home() {
-    const { user } = useContext(AuthContext);
+    const { user, idsMT5 } = useContext(AuthContext);
     const [capitalInvestido, setCapitalInvestido] = useState(0);
-    const [capitalLiquido, setCapitalLiquido] = useState(0);
+    const [profitPerMonth, setProfitPerMonth] = useState(0);
     const [saldo, setSaldo] = useState(0);
     const [lucro, setLucro] = useState(0);
     const [orderOpen, setOrderOpen] = useState(0);
@@ -16,27 +16,39 @@ function Home() {
     const [data, setData] = useState("");
 
     useEffect(() => {
+        async function ProfitPerMonth() {
+            try {
+                await api.get(`/month/${idsMT5}`).then(function (response) {
+                    setProfitPerMonth(response.data);
+                    return response.data;
+                });
+            } catch (_err) {
+                console.log(_err);
+            }
+        }
         async function Balance() {
             try {
-                await api.get("/balancehome/1163").then(function (response) {
-                    setData(response.data);
-                    setSaldo(response.data.balance.banca);
-                    let totalCapital = 0;
-                    for (
-                        let i = 0;
-                        i < response.data.balanceCapital.length;
-                        i++
-                    ) {
-                        if (data.balanceCapital[i].return_profit > 0) {
-                            totalCapital =
-                                parseFloat(
-                                    data.balanceCapital[i].return_profit
-                                ) + totalCapital;
+                await api
+                    .get(`/balancehome/${idsMT5}`)
+                    .then(function (response) {
+                        setData(response.data);
+                        setSaldo(response.data.balance.banca);
+                        let totalCapital = 0;
+                        for (
+                            let i = 0;
+                            i < response.data.balanceCapital.length;
+                            i++
+                        ) {
+                            if (data.balanceCapital[i].return_profit > 0) {
+                                totalCapital =
+                                    parseFloat(
+                                        data.balanceCapital[i].return_profit
+                                    ) + totalCapital;
+                            }
                         }
-                    }
-                    setCapitalInvestido(totalCapital);
-                    setLucro(saldo - totalCapital);
-                });
+                        setCapitalInvestido(totalCapital);
+                        setLucro(saldo - totalCapital);
+                    });
             } catch (_err) {
                 console.log(_err);
             }
@@ -44,7 +56,7 @@ function Home() {
         async function Equity() {
             try {
                 await api
-                    .get("/operation/id_cliente=1163&id_adm=1140")
+                    .get(`/operation/id_cliente=${idsMT5}&id_adm=1140`)
                     .then(function (response) {
                         setOrderOpen(response.data.equity);
                     });
@@ -54,30 +66,33 @@ function Home() {
         }
         async function Comission() {
             try {
-                await api.get("/comissionhome/1163").then(function (response) {
-                    let comissions = 0;
-                    const comissionLength = response.data.balanceCapital.length;
-                    const resp = response.data;
-                    for (let i = 0; i < comissionLength; i++) {
-                        if (
-                            resp.balanceCapital[i].comission != "0" &&
-                            resp.balanceCapital[i].comission != undefined
-                        ) {
-                            console.log(i);
-                            console.log(resp.balanceCapital[i].comission);
-                            console.log(resp.balanceCapital[i].id);
-                            comissions =
-                                comissions +
-                                parseFloat(resp.balanceCapital[i].comission);
+                await api
+                    .get(`/comissionhome/${idsMT5}`)
+                    .then(function (response) {
+                        let comissions = 0;
+                        const comissionLength =
+                            response.data.balanceCapital.length;
+                        const resp = response.data;
+                        for (let i = 0; i < comissionLength; i++) {
+                            if (
+                                resp.balanceCapital[i].comission != "0" &&
+                                resp.balanceCapital[i].comission != undefined
+                            ) {
+                                comissions =
+                                    comissions +
+                                    parseFloat(
+                                        resp.balanceCapital[i].comission
+                                    );
+                            }
                         }
-                    }
 
-                    setComission(comissions);
-                });
+                        setComission(comissions);
+                    });
             } catch (_err) {
                 console.log(_err);
             }
         }
+        ProfitPerMonth();
         Balance();
         Equity();
         Comission();
@@ -91,6 +106,7 @@ function Home() {
         ).toFixed(2);
         return capital;
     }
+
     return (
         <View style={styles.container}>
             <View style={styles.containerLogo}>
@@ -106,7 +122,9 @@ function Home() {
                 </View>
                 <View style={styles.cardBlue}>
                     <Text style={styles.textWhite}>Capital Líquido</Text>
-                    <Text style={styles.textWhiteValue}>${capitalCalculated()}</Text>
+                    <Text style={styles.textWhiteValue}>
+                        ${capitalCalculated()}
+                    </Text>
                 </View>
             </View>
             <View style={styles.cards}>
@@ -124,7 +142,9 @@ function Home() {
             <View style={styles.cards}>
                 <View style={styles.cardWhite}>
                     <Text style={styles.textBlue}>Ordens Abertas</Text>
-                    <Text style={styles.textComission}>${orderOpen.toFixed(2)}</Text>
+                    <Text style={styles.textComission}>
+                        ${orderOpen.toFixed(2)}
+                    </Text>
                 </View>
                 <View style={styles.cardWhite}>
                     <Text style={styles.textBlue}>Custos e Comissões</Text>
@@ -133,7 +153,7 @@ function Home() {
                     </Text>
                 </View>
             </View>
-            <LineChartExample text="GANHO ACUMULADO"/>
+            <LineChartExample text="GANHO ACUMULADO" data={profitPerMonth} />
         </View>
     );
 }

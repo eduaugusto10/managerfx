@@ -2,12 +2,12 @@ import React, { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import styles from "./style";
-import { SignIn } from "../../services/auth";
+
 import AuthContext from "../../context/auth";
 import api from "../../services/api";
 
 function Login({ navigation }) {
-    const { signed, signIn, user } = useContext(AuthContext);
+    const { signed, signIn, user, idMT5, idsMT5 } = useContext(AuthContext);
     const [entryBtn, setEntryBtn] = useState("Entrar");
     const [email, setEmail] = useState();
     const [emailText, setEmailText] = useState("Insira seu ID");
@@ -35,7 +35,6 @@ function Login({ navigation }) {
     };
     async function handleSignInPress() {
         if (email.length === 0 || password.length === 0) {
-            console.log("Insira usuario e senha");
         } else {
             try {
                 setEntryBtn("Aguarde...");
@@ -46,7 +45,12 @@ function Login({ navigation }) {
                     })
                     .then(function (response) {
                         setToken(response.data.token);
-                        console.log(response.data.token);
+                        idMT5(
+                            response.data.user[0].id_metatrader,
+                            response.data.user[0].first_name,
+                            response.data.user[0].second_name,
+                            response.data.user[0].email
+                        );
                     });
 
                 if (token !== null) {
@@ -56,7 +60,6 @@ function Login({ navigation }) {
                     //navigation.push("Home");
                 }
             } catch (_err) {
-                console.log("Erro usuario e senha");
                 console.log(_err);
                 setEmail("");
                 setEmailText("ID ou senha inválida");

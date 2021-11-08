@@ -6,7 +6,7 @@ import api from "../../services/api";
 import { format } from "date-fns";
 
 function OrdersOpen() {
-    const { user } = useContext(AuthContext);
+    const { user, idsMT5 } = useContext(AuthContext);
     const [data, setData] = useState();
     const [allOrders, setAllOrders] = useState(0);
     const [selectedId, setSelectedId] = useState(null);
@@ -15,11 +15,11 @@ function OrdersOpen() {
         async function OrderOpen() {
             try {
                 await api
-                    .get("operation/id_cliente=1163&id_adm=1140")
+                    .get(`operation/id_cliente=${idsMT5}&id_adm=1140`)
                     .then(function (response) {
                         setData(response.data.operation);
                         setAllOrders(response.data.allOrders);
-                        console.log("All orders: ",response.data.allOrders[1].ticket);
+                        
                     });
             } catch (_err) {
                 console.log(_err);
@@ -29,19 +29,14 @@ function OrdersOpen() {
     }, []);
 
     function Days(days) {
-        console.log(days);
         let newDays = new Date(days);
         newDays = format(newDays, "yyyy.MM.dd");
         return newDays;
     }
-
-    
     function AllOrders(ticket) {
-        console.log("Numero do ticket: ",ticket)
         for (let i = 0; i < allOrders.length; i++) {
-            console.log(i);
             if (ticket == allOrders[i].ticket) {
-                return (parseFloat(allOrders[i].percentual)*100).toFixed(2);
+                return (parseFloat(allOrders[i].percentual) * 100).toFixed(2);
             }
         }
         return 0;
@@ -65,7 +60,9 @@ function OrdersOpen() {
                     <Text style={styles.title2}>{Days(item.date_open)}</Text>
                     <Text style={styles.title3}>Share</Text>
                     <Text style={styles.title2}>
-                        {allOrders.length > 0 ? AllOrders(item.ticket)+"%" : 0.0+"%"}
+                        {allOrders.length > 0
+                            ? AllOrders(item.ticket) + "%"
+                            : 0.0 + "%"}
                     </Text>
                 </View>
                 <View>
@@ -75,7 +72,12 @@ function OrdersOpen() {
                             item.return_profit > 0 ? styles.buy : styles.sell
                         }
                     >
-                        $ {(parseFloat(item.return_profit) * parseFloat(AllOrders(item.ticket))/100).toFixed(2)}
+                        ${" "}
+                        {(
+                            (parseFloat(item.return_profit) *
+                                parseFloat(AllOrders(item.ticket))) /
+                            100
+                        ).toFixed(2)}
                     </Text>
                     <Text style={styles.title3}>Lucro Fundo</Text>
                     <Text style={styles.title2}>$ {item.return_profit}</Text>
@@ -92,7 +94,6 @@ function OrdersOpen() {
                 item={item}
                 onPress={() => setSelectedId(item.id)}
                 style={{ backgroundColor }}
-                
             />
         );
     };
@@ -102,7 +103,7 @@ function OrdersOpen() {
             <FlatList
                 data={data}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 extraData={selectedId}
             />
         </View>

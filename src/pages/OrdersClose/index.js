@@ -6,18 +6,17 @@ import api from "../../services/api";
 import { format } from "date-fns";
 
 function OrdersClose() {
-    const { user } = useContext(AuthContext);
+    const { user, idsMT5 } = useContext(AuthContext);
     const [data, setData] = useState();
-    const [dataII, setDataII] = useState(undefined);
+    const [dataII, setDataII] = useState(0);
     const [selectedId, setSelectedId] = useState(null);
 
     useEffect(() => {
         async function apiOrdersClose() {
             try {
-                await api.get("close/1163").then(function (response) {
+                await api.get(`close/${idsMT5}`).then(function (response) {
                     setData(response.data.balance.data);
                     setDataII(response.data.close);
-                    console.log(response.data.close);
                 });
             } catch (_err) {
                 console.log(_err);
@@ -27,45 +26,44 @@ function OrdersClose() {
     }, []);
 
     function Days(days) {
-        console.log(days);
         let newDays = new Date(days);
         newDays = format(newDays, "yyyy.MM.dd");
         return newDays;
     }
     function Symbol(tickets) {
-        console.log(tickets);
-        for (let i = 0; i < data.length; i++) {
-            if (tickets == dataII[i].order_id) {
-                return dataII[i].symbol;
+        if (dataII != 0) {
+            for (let i = 0; i < data.length; i++) {
+                if (tickets == dataII[i].order_id) {
+                    return dataII[i].symbol;
+                }
             }
         }
         return null;
     }
     function DateClose(tickets) {
-        console.log(tickets);
         for (let i = 0; i < data.length; i++) {
             if (tickets == dataII[i].order_id) {
-                
                 return Days(dataII[i].date);
             }
         }
         return null;
     }
     function TypeOperation(tickets) {
-        console.log(tickets);
-        for (let i = 0; i < data.length; i++) {
-            if (tickets == dataII[i].order_id) {
-                return dataII[i].operation_type;
+        if (dataII != 0) {
+            for (let i = 0; i < data.length; i++) {
+                if (tickets == dataII[i].order_id) {
+                    return dataII[i].operation_type;
+                }
             }
         }
-        return null;
+        return 0;
     }
     const Item = ({ item, onPress, style }) => (
         <TouchableOpacity onPress={onPress} style={styles.item}>
             <View style={styles.card}>
                 <View>
                     <Text style={styles.title}>
-                        {dataII != undefined ? Symbol(item.ticket) : null}
+                        {dataII != 0 ? Symbol(item.ticket) : null}
                     </Text>
                     <Text
                         style={
@@ -84,7 +82,7 @@ function OrdersClose() {
                 <View style={styles.columncenter}>
                     <Text style={styles.title}>Dt Abertura</Text>
                     <Text style={styles.title2}>
-                        {DateClose(item.ticket)}
+                        {dataII == 0 ? "1970.01.01" : DateClose(item.ticket)}
                     </Text>
                     <Text style={styles.title3}>Dt Fechamento</Text>
                     <Text style={styles.title}>
@@ -129,7 +127,7 @@ function OrdersClose() {
             <FlatList
                 data={data}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.id.toString()}
                 extraData={selectedId}
             />
         </View>

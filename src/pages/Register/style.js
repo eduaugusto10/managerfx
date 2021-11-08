@@ -23,7 +23,7 @@ export default StyleSheet.create({
         alignItems: "center",
         borderBottomColor: "#FFFFFF",
         width: 292,
-        paddingTop: 20,
+        paddingTop: 15,
         paddingBottom: 10,
     },
     button: {
@@ -33,7 +33,7 @@ export default StyleSheet.create({
         borderRadius: 6,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 58,
+        marginTop: 38,
     },
     textButton: {
         fontSize: 20,
@@ -58,7 +58,7 @@ export default StyleSheet.create({
         height: 63,
     },
     containerLogo: {
-        marginTop: 50,
-        marginBottom: 20,
+        marginTop: 20,
+        marginBottom: 10,
     },
 });

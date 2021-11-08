@@ -28,16 +28,38 @@ function Router() {
                     }
                     return <Icon name={iconName} size={size} color={color} />;
                 },
+                tabBarStyle : {
+                    height: 65,
+               },
+               tabBarItemStyle:{
+                   paddingBottom:10,
+               },
                 tabBarActiveTintColor: "#FFFFFF",
                 tabBarInactiveTintColor: "#F7941D99",
                 tabBarActiveBackgroundColor: "#245CA0",
                 tabBarInactiveBackgroundColor: "#245CA0",
             })}
         >
-            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }}/>
-            <Stack.Screen name="Evolução" component={Evolution} />
-            <Stack.Screen name="Carteira" component={Wallet} />
-            <Stack.Screen name="Perfil" component={Settings} />
+            <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Evolução"
+                component={Evolution}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Carteira"
+                component={Wallet}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Perfil"
+                component={Settings}
+                options={{ headerShown: false }}
+            />
         </Stack.Navigator>
     );
 }
