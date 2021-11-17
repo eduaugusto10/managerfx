@@ -13,7 +13,6 @@ function Home() {
     const [lucro, setLucro] = useState(0);
     const [orderOpen, setOrderOpen] = useState(0);
     const [comission, setComission] = useState(0);
-    const [data, setData] = useState("");
 
     useEffect(() => {
         async function ProfitPerMonth() {
@@ -31,23 +30,10 @@ function Home() {
                 await api
                     .get(`/balancehome/${idsMT5}`)
                     .then(function (response) {
-                        setData(response.data);
                         setSaldo(response.data.balance.banca);
-                        let totalCapital = 0;
-                        for (
-                            let i = 0;
-                            i < response.data.balanceCapital.length;
-                            i++
-                        ) {
-                            if (data.balanceCapital[i].return_profit > 0) {
-                                totalCapital =
-                                    parseFloat(
-                                        data.balanceCapital[i].return_profit
-                                    ) + totalCapital;
-                            }
-                        }
-                        setCapitalInvestido(totalCapital);
-                        setLucro(saldo - totalCapital);
+                        setCapitalInvestido(response.data.balanceCapital[0].sum);
+                        setLucro(saldo - response.data.balanceCapital[0].sum);
+                        setComission(response.data.comissions[0].sum)
                     });
             } catch (_err) {
                 console.log(_err);
@@ -63,39 +49,10 @@ function Home() {
             } catch (_err) {
                 console.log(_err);
             }
-        }
-        async function Comission() {
-            try {
-                await api
-                    .get(`/comissionhome/${idsMT5}`)
-                    .then(function (response) {
-                        let comissions = 0;
-                        const comissionLength =
-                            response.data.balanceCapital.length;
-                        const resp = response.data;
-                        for (let i = 0; i < comissionLength; i++) {
-                            if (
-                                resp.balanceCapital[i].comission != "0" &&
-                                resp.balanceCapital[i].comission != undefined
-                            ) {
-                                comissions =
-                                    comissions +
-                                    parseFloat(
-                                        resp.balanceCapital[i].comission
-                                    );
-                            }
-                        }
-
-                        setComission(comissions);
-                    });
-            } catch (_err) {
-                console.log(_err);
-            }
-        }
+        }        
         ProfitPerMonth();
         Balance();
-        Equity();
-        Comission();
+        Equity();        
     }, [capitalInvestido, saldo]);
 
     function capitalCalculated() {

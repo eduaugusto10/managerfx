@@ -38,10 +38,9 @@ function Register({ navigation }) {
                 storeData(token);
                 getData;
                 signIn();
-                //navigation.push("Home");
+                navigation.push("Login");
             }
         } catch (_err) {
-            console.log("Erro usuario e senha");
             console.log(_err);
             setEmail("");
             setPassword("");

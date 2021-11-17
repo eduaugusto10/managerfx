@@ -31,22 +31,22 @@ export function BarsChart(props) {
                     labels: [
                         props.data == 0
                             ? 0
-                            : month[props.data.balances[length - 6].month],
-                        props.data == 0
+                            : length-6<0 ? 0 : month[props.data.balances[length-6].month],
+                            props.data == 0
                             ? 0
-                            : month[props.data.balances[length - 5].month],
-                        props.data == 0
+                            : length-5<0 ? 0 : month[props.data.balances[length-5].month],
+                            props.data == 0
                             ? 0
-                            : month[props.data.balances[length - 4].month],
-                        props.data == 0
+                            : length-4<0 ? 0 : month[props.data.balances[length-4].month],
+                            props.data == 0
                             ? 0
-                            : month[props.data.balances[length - 3].month],
-                        props.data == 0
+                            : length-3<0 ? 0 : month[props.data.balances[length-3].month],
+                            props.data == 0
                             ? 0
-                            : month[props.data.balances[length - 2].month],
-                        props.data == 0
+                            : length-2<0 ? 0 : month[props.data.balances[length-2].month],
+                            props.data == 0
                             ? 0
-                            : month[props.data.balances[length - 1].month],
+                            : length-1<0 ? 0 : month[props.data.balances[length-1].month],
                     ],
                     datasets: [
                         {
@@ -54,32 +54,32 @@ export function BarsChart(props) {
                                 props.data == 0
                                     ? 0
                                     : parseFloat(
-                                          props.data.balances[length - 6].sum
+                                        length-6<0 ? 0 : props.data.balances[length - 6].sum
                                       ),
                                 props.data == 0
                                     ? 0
                                     : parseFloat(
-                                          props.data.balances[length - 5].sum
+                                        length-5<0 ? 0 : props.data.balances[length - 5].sum
                                       ),
                                 props.data == 0
                                     ? 0
                                     : parseFloat(
-                                          props.data.balances[length - 4].sum
+                                        length-4<0 ? 0 : props.data.balances[length - 4].sum
                                       ),
                                 props.data == 0
                                     ? 0
                                     : parseFloat(
-                                          props.data.balances[length - 3].sum
+                                        length-3<0 ? 0 : props.data.balances[length - 3].sum
                                       ),
                                 props.data == 0
                                     ? 0
                                     : parseFloat(
-                                          props.data.balances[length - 2].sum
+                                        length-2<0 ? 0 : props.data.balances[length - 2].sum
                                       ),
                                 props.data == 0
                                     ? 0
                                     : parseFloat(
-                                          props.data.balances[length - 1].sum
+                                        length-1<0 ? 0 : props.data.balances[length - 1].sum
                                       ),
                             ],
                         },

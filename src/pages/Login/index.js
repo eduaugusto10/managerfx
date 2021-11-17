@@ -25,10 +25,6 @@ function Login({ navigation }) {
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem("@token_managerfx");
-            if (value !== null) {
-                console.log("Resultado do token");
-                console.log(value);
-            }
         } catch (e) {
             // error reading value
         }

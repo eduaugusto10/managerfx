@@ -61,7 +61,7 @@ function OrdersClose() {
     const Item = ({ item, onPress, style }) => (
         <TouchableOpacity onPress={onPress} style={styles.item}>
             <View style={styles.card}>
-                <View>
+                <View >
                     <Text style={styles.title}>
                         {dataII != 0 ? Symbol(item.ticket) : null}
                     </Text>
@@ -96,7 +96,7 @@ function OrdersClose() {
                         ).toFixed(2)}
                     </Text>
                 </View>
-                <View>
+                <View style={styles.columncenter}>
                     <Text style={styles.title}>Lucro Investidor</Text>
                     <Text style={item.lucro > 0 ? styles.buy : styles.sell}>
                         $ {item.lucro}

@@ -2,10 +2,6 @@ import React from "react";
 import { View, Text, Dimensions } from "react-native";
 import {
     LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
 } from "expo-chart-kit";
 import styles from "./style";
 
@@ -35,7 +31,7 @@ export function AreaChartExample(props) {
         }
         return sum;
     }
-
+    
     return (
         <View style={styles.container}>
             <View style={styles.card}>
@@ -46,22 +42,22 @@ export function AreaChartExample(props) {
                     labels: [
                         props.data == 0
                             ? 0
-                            : month[props.data.balances[length-6].month],
+                            : length-6<0 ? 0 : month[props.data.balances[length-6].month],
                             props.data == 0
                             ? 0
-                            : month[props.data.balances[length-5].month],
+                            : length-5<0 ? 0 : month[props.data.balances[length-5].month],
                             props.data == 0
                             ? 0
-                            : month[props.data.balances[length-4].month],
+                            : length-4<0 ? 0 : month[props.data.balances[length-4].month],
                             props.data == 0
                             ? 0
-                            : month[props.data.balances[length-3].month],
+                            : length-3<0 ? 0 : month[props.data.balances[length-3].month],
                             props.data == 0
                             ? 0
-                            : month[props.data.balances[length-2].month],
+                            : length-2<0 ? 0 : month[props.data.balances[length-2].month],
                             props.data == 0
                             ? 0
-                            : month[props.data.balances[length-1].month],
+                            : length-1<0 ? 0 : month[props.data.balances[length-1].month],
                     ],
                     datasets: [
                         {
