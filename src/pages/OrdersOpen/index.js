@@ -19,7 +19,6 @@ function OrdersOpen() {
                     .then(function (response) {
                         setData(response.data.operation);
                         setAllOrders(response.data.allOrders);
-                        
                     });
             } catch (_err) {
                 console.log(_err);
@@ -57,11 +56,11 @@ function OrdersOpen() {
                 </View>
                 <View style={styles.columncenter}>
                     <Text style={styles.title}>Data Abertura</Text>
-                    <Text style={styles.title2}>{Days(item.date_open)}</Text>
+                    <Text style={styles.title2}>{Days(item.date)}</Text>
                     <Text style={styles.title3}>Share</Text>
                     <Text style={styles.title2}>
                         {allOrders.length > 0
-                            ? AllOrders(item.ticket) + "%"
+                            ? AllOrders(item.order_id) + "%"
                             : 0.0 + "%"}
                     </Text>
                 </View>
@@ -75,7 +74,7 @@ function OrdersOpen() {
                         ${" "}
                         {(
                             (parseFloat(item.return_profit) *
-                                parseFloat(AllOrders(item.ticket))) /
+                                parseFloat(AllOrders(item.order_id))) /
                             100
                         ).toFixed(2)}
                     </Text>

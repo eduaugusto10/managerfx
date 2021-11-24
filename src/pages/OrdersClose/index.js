@@ -30,76 +30,77 @@ function OrdersClose() {
         newDays = format(newDays, "yyyy.MM.dd");
         return newDays;
     }
-    function Symbol(tickets) {
-        if (dataII != 0) {
-            for (let i = 0; i < data.length; i++) {
-                if (tickets == dataII[i].order_id) {
-                    return dataII[i].symbol;
-                }
-            }
-        }
-        return null;
-    }
+
     function DateClose(tickets) {
         for (let i = 0; i < data.length; i++) {
-            if (tickets == dataII[i].order_id) {
-                return Days(dataII[i].date);
+            if (tickets == data[i].ticket) {
+                return Days(data[i].date_operation);
             }
         }
         return null;
     }
-    function TypeOperation(tickets) {
-        if (dataII != 0) {
-            for (let i = 0; i < data.length; i++) {
-                if (tickets == dataII[i].order_id) {
-                    return dataII[i].operation_type;
-                }
+    function Share(tickets) {
+        for (let i = 0; i < data.length; i++) {
+            if (tickets == data[i].ticket) {
+                return data[i].percentual;
             }
         }
-        return 0;
+        return null;
     }
+    function ProfitFund(tickets) {
+        for (let i = 0; i < data.length; i++) {
+            if (tickets == data[i].ticket) {
+                return (
+                    parseFloat(data[i].lucro) / parseFloat(data[i].percentual)
+                ).toFixed(2);
+            }
+        }
+        return null;
+    }
+    function InvestProfit(tickets) {
+        for (let i = 0; i < data.length; i++) {
+            if (tickets == data[i].ticket) {
+                return parseFloat(data[i].lucro).toFixed(2);
+            }
+        }
+        return null;
+    }
+
     const Item = ({ item, onPress, style }) => (
         <TouchableOpacity onPress={onPress} style={styles.item}>
             <View style={styles.card}>
-                <View >
+                <View>
                     <Text style={styles.title}>
-                        {dataII != 0 ? Symbol(item.ticket) : null}
+                        {dataII != 0 ? item.symbol : null}
                     </Text>
                     <Text
                         style={
-                            TypeOperation(item.ticket) > 0
-                                ? styles.buy
-                                : styles.sell
+                            item.operation_type > 0 ? styles.buy : styles.sell
                         }
                     >
-                        {TypeOperation(item.ticket) > 0 ? "BUY" : "SELL"}
+                        {item.operation_type > 0 ? "BUY" : "SELL"}
                     </Text>
                     <Text style={styles.title3}>Share</Text>
                     <Text style={styles.title2}>
-                        {(parseFloat(item.percentual) * 100).toFixed(2)}%
+                        {(parseFloat(Share(item.order_id)) * 100).toFixed(2)}%
                     </Text>
                 </View>
                 <View style={styles.columncenter}>
                     <Text style={styles.title}>Dt Abertura</Text>
                     <Text style={styles.title2}>
-                        {dataII == 0 ? "1970.01.01" : DateClose(item.ticket)}
+                        {dataII == 0 ? "1970.01.01" : Days(item.date)}
                     </Text>
                     <Text style={styles.title3}>Dt Fechamento</Text>
-                    <Text style={styles.title}>
-                        {Days(item.date_operation)}
-                    </Text>
+                    <Text style={styles.title}>{DateClose(item.order_id)}</Text>
                     <Text style={styles.title3}>Lucro Fundo</Text>
                     <Text style={styles.title2}>
-                        ${" "}
-                        {(
-                            parseFloat(item.lucro) / parseFloat(item.percentual)
-                        ).toFixed(2)}
+                        {ProfitFund(item.order_id)}
                     </Text>
                 </View>
                 <View style={styles.columncenter}>
                     <Text style={styles.title}>Lucro Investidor</Text>
-                    <Text style={item.lucro > 0 ? styles.buy : styles.sell}>
-                        $ {item.lucro}
+                    <Text style={InvestProfit(item.order_id) > 0 ? styles.buy : styles.sell}>
+                        $ {InvestProfit(item.order_id)}
                     </Text>
                     <Text style={styles.title3}>Tx Performance</Text>
                     <Text style={styles.title2}>$ 0,00</Text>
@@ -125,7 +126,7 @@ function OrdersClose() {
     return (
         <View style={styles.container}>
             <FlatList
-                data={data}
+                data={dataII}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
                 extraData={selectedId}
