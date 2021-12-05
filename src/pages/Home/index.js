@@ -6,7 +6,7 @@ import AuthContext from "../../context/auth";
 import LineChartExample from "../../components/Graph";
 
 function Home() {
-    const { user, idsMT5 } = useContext(AuthContext);
+    const { idsMT5, idADM } = useContext(AuthContext);
     const [capitalInvestido, setCapitalInvestido] = useState(0);
     const [profitPerMonth, setProfitPerMonth] = useState(0);
     const [saldo, setSaldo] = useState(0);
@@ -31,9 +31,11 @@ function Home() {
                     .get(`/balancehome/${idsMT5}`)
                     .then(function (response) {
                         setSaldo(response.data.balance.banca);
-                        setCapitalInvestido(response.data.balanceCapital[0].sum);
+                        setCapitalInvestido(
+                            response.data.balanceCapital[0].sum
+                        );
                         setLucro(saldo - response.data.balanceCapital[0].sum);
-                        setComission(response.data.comissions[0].sum)
+                        setComission(response.data.comissions[0].sum);
                     });
             } catch (_err) {
                 console.log(_err);
@@ -42,17 +44,17 @@ function Home() {
         async function Equity() {
             try {
                 await api
-                    .get(`/operation/id_cliente=${idsMT5}&id_adm=1140`)
+                    .get(`/operation/id_cliente=${idsMT5}&id_adm=${idADM}`)
                     .then(function (response) {
                         setOrderOpen(response.data.equity);
                     });
             } catch (_err) {
                 console.log(_err);
             }
-        }        
+        }
         ProfitPerMonth();
         Balance();
-        Equity();        
+        Equity();
     }, [capitalInvestido, saldo]);
 
     function capitalCalculated() {

@@ -11,6 +11,7 @@ function Login({ navigation }) {
     const [entryBtn, setEntryBtn] = useState("Entrar");
     const [email, setEmail] = useState();
     const [emailText, setEmailText] = useState("Insira seu ID");
+    const [ativated, setAtivated] = useState("0");
     const [password, setPassword] = useState();
     const [passwordText, setPasswordText] = useState("Insira sua senha");
     const [token, setToken] = useState();
@@ -40,20 +41,26 @@ function Login({ navigation }) {
                         password: password,
                     })
                     .then(function (response) {
-                        setToken(response.data.token);
-                        idMT5(
-                            response.data.user[0].id_metatrader,
-                            response.data.user[0].first_name,
-                            response.data.user[0].second_name,
-                            response.data.user[0].email
-                        );
+                        if (response.data.user[0].ativated === "1") {
+                            setToken(response.data.token);
+                            setAtivated(response.data.user[0].ativated);
+                            idMT5(
+                                response.data.user[0].id_metatrader,
+                                response.data.user[0].first_name,
+                                response.data.user[0].second_name,
+                                response.data.user[0].email,
+                                response.data.user[0].id_adm
+                            );
+                        }
                     });
 
-                if (token !== null) {
+                if (token !== null && ativated === "1") {
                     storeData(token);
                     getData;
                     signIn();
                     //navigation.push("Home");
+                } else {
+                    setEntryBtn("Entrar");
                 }
             } catch (_err) {
                 console.log(_err);

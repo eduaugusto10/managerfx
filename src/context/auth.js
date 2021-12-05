@@ -10,6 +10,7 @@ const AuthContext = createContext({
     name: {},
     lastName: {},
     email: {},
+    idADM: {},
 });
 
 export function AuthProvider({ children }) {
@@ -18,16 +19,18 @@ export function AuthProvider({ children }) {
     const [name, setName] = useState();
     const [lastName, setLastName] = useState();
     const [email, setEmail] = useState();
+    const [idADM, setIDAdm] = useState();
 
     async function signIn() {
         const response = await auth.signIn();
         setUser(response.user);
     }
-    async function idMT5(id, names, lastNames, emails) {
+    async function idMT5(id, names, lastNames, emails, idAdms) {
         setsIDMT5(id);
         setName(names);
         setEmail(emails);
         setLastName(lastNames);
+        setIDAdm(idAdms);
     }
 
     return (
@@ -41,6 +44,7 @@ export function AuthProvider({ children }) {
                 lastName,
                 name,
                 email,
+                idADM,
             }}
         >
             {children}

@@ -1,23 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import Icons from "react-native-vector-icons/AntDesign";
-
+import api from "../../services/api";
 import styles from "./style";
 
 import AuthContext from "../../context/auth";
 
-function Home() {
-    const [entryBTN, setEntryBtn] = useState("Confirmar");
+function Settings() {
     const { user, idMT5, idsMT5, lastName, name, email } =
         useContext(AuthContext);
+    const [entryBTN, setEntryBtn] = useState("Confirmar");
+    const [names, setNames] = useState(name);
+    const [lastNames, setLastNames] = useState(lastName);
+    const [emails, setEmails] = useState(email);
 
     async function handleChange() {
+        setEntryBtn("Aguarde...");
+        console.log(user)
         try {
-            setEntryBtn("Aguarde...");
-            await api.post("/users", {
-                first_name: name,
-                second_name: lastName,
-                email: email,
+            await api.put(`/users/12`, {
+                first_name: names,
+                second_name: lastNames,
+                email: emails,
             });
             idMT5(idsMT5, name, lastName, email);
         } catch (_err) {
@@ -44,7 +48,8 @@ function Home() {
                         style={styles.input}
                         placeholder="Primeiro Nome"
                         placeholderTextColor="#FFFFFF"
-                        value={name}
+                        value={names}
+                        onChange={(e) => setNames(e.target.value)}
                     />
                 </View>
                 <View style={styles.inputView}>
@@ -58,7 +63,8 @@ function Home() {
                         style={styles.input}
                         placeholder="Último Nome"
                         placeholderTextColor="#FFFFFF"
-                        value={lastName}
+                        value={lastNames}
+                        onChange={(e) => setLastNames(e.target.value)}
                     />
                 </View>
                 <View style={styles.inputView}>
@@ -72,12 +78,16 @@ function Home() {
                         style={styles.input}
                         placeholder="E-mail"
                         placeholderTextColor="#FFFFFF"
-                        value={email}
+                        value={emails}
+                        onChange={(e) => setEmails(e.target.value)}
                     />
                 </View>
             </View>
             <View style={styles.buttonView}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={handleChange}
+                >
                     <Text style={styles.textButton}>{entryBTN}</Text>
                 </TouchableOpacity>
             </View>
@@ -85,4 +95,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Settings;

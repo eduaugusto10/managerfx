@@ -5,49 +5,51 @@ import styles from "./style";
 import api from "../../services/api";
 
 function Register({ navigation }) {
-    const [name,setName] = useState("")
-    const [lastName,setLastName] = useState("")
-    const [id,setID] = useState("")
-    const [email,setEmail] = useState("")
-    const [password,setPassword] = useState()
-    const [confPassword,setConfPassword] = useState()
-    const [answer,setAnswer] = useState("")
-    const [question,setQuestion] = useState("")
-    const [pamm,setPAMM] = useState("")
-    const [entryBTN,setEntryBtn] = useState("Confirmar")
-    
-    async function handleSignInPress() {
-    if (email.length === 0 || password.length === 0 || confPassword!=password) {
-        
-    } else {
-        try {
-            setEntryBtn("Aguarde...");
-            await api
-                .post("/users", {
-                    "first_name": name,
-                    "second_name": lastName,
-                    "id_metatrader": id,
-                    "email":email,
-                    "question":question,
-                    "answer":answer,
-                    "password": password,
-                    "id_adm": pamm
-                })                
+    const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [id, setID] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState();
+    const [confPassword, setConfPassword] = useState();
+    const [answer, setAnswer] = useState("");
+    const [question, setQuestion] = useState("");
+    const [pamm, setPAMM] = useState("");
+    const [entryBTN, setEntryBtn] = useState("Confirmar");
 
-            if (token !== null) {
-                storeData(token);
-                getData;
-                signIn();
-                navigation.push("Login");
+    async function handleSignInPress() {
+        if (
+            email.length === 0 ||
+            password.length === 0 ||
+            confPassword != password
+        ) {
+        } else {
+            try {
+                setEntryBtn("Aguarde...");
+                await api.post("/users", {
+                    first_name: name,
+                    second_name: lastName,
+                    id_metatrader: id,
+                    email: email,
+                    question: question,
+                    answer: answer,
+                    password: password,
+                    id_adm: pamm,
+                });
+
+                if (token !== null) {
+                    storeData(token);
+                    getData;
+                    signIn();
+                    navigation.push("Login");
+                }
+            } catch (_err) {
+                console.log(_err);
+                setEmail("");
+                setPassword("");
+                setEntryBtn("Entrar");
             }
-        } catch (_err) {
-            console.log(_err);
-            setEmail("");
-            setPassword("");
-            setEntryBtn("Entrar");
         }
     }
-}
     return (
         <View style={styles.container}>
             <View style={styles.containerLogo}>

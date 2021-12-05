@@ -6,7 +6,7 @@ import api from "../../services/api";
 import { format } from "date-fns";
 
 function OrdersOpen() {
-    const { user, idsMT5 } = useContext(AuthContext);
+    const { idsMT5, idADM } = useContext(AuthContext);
     const [data, setData] = useState();
     const [allOrders, setAllOrders] = useState(0);
     const [selectedId, setSelectedId] = useState(null);
@@ -15,7 +15,7 @@ function OrdersOpen() {
         async function OrderOpen() {
             try {
                 await api
-                    .get(`operation/id_cliente=${idsMT5}&id_adm=1140`)
+                    .get(`operation/id_cliente=${idsMT5}&id_adm=${idADM}`)
                     .then(function (response) {
                         setData(response.data.operation);
                         setAllOrders(response.data.allOrders);
