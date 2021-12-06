@@ -7,23 +7,47 @@ import { format } from "date-fns";
 
 function OrdersClose() {
     const { user, idsMT5 } = useContext(AuthContext);
-    const [data, setData] = useState();
-    const [dataII, setDataII] = useState(0);
+    const [data, setData] = useState([]);
+    const [dataII, setDataII] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function apiOrdersClose() {
             try {
-                await api.get(`close/${idsMT5}`).then(function (response) {
-                    setData(response.data.balance.data);
-                    setDataII(response.data.close);
-                });
+                await api
+                    .get(`close/${idsMT5}&page=${page}`)
+                    .then(function (response) {
+                        setData(response.data.balance.data);
+                        setDataII(response.data.close);
+                        setPage(page + 1);
+                        setLoading(false);
+                    });
             } catch (_err) {
                 console.log(_err);
             }
         }
         apiOrdersClose();
     }, []);
+
+    async function loadOrders() {
+        if (loading === true) return;
+        console.log("Passou por aqui!");
+        setLoading(true);
+        try {
+            await api
+                .get(`close/${idsMT5}&page=${page}`)
+                .then(function (response) {
+                    setData([...data, ...response.data.balance.data]);
+                    setDataII([...dataII, ...response.data.close]);
+                    setPage(page + 1);
+                    setLoading(false);
+                });
+        } catch (_err) {
+            console.log(_err);
+        }
+    }
 
     function Days(days) {
         let newDays = new Date(days);
@@ -99,7 +123,13 @@ function OrdersClose() {
                 </View>
                 <View style={styles.columncenter}>
                     <Text style={styles.title}>Lucro Investidor</Text>
-                    <Text style={InvestProfit(item.order_id) > 0 ? styles.buy : styles.sell}>
+                    <Text
+                        style={
+                            InvestProfit(item.order_id) > 0
+                                ? styles.buy
+                                : styles.sell
+                        }
+                    >
                         $ {InvestProfit(item.order_id)}
                     </Text>
                     <Text style={styles.title3}>Tx Performance</Text>
@@ -130,6 +160,8 @@ function OrdersClose() {
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id.toString()}
                 extraData={selectedId}
+                onEndReached={() => loadOrders()}
+                onEndReachedThreshold={0.5}
             />
         </View>
     );

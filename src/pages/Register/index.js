@@ -34,6 +34,8 @@ function Register({ navigation }) {
                     answer: answer,
                     password: password,
                     id_adm: pamm,
+                    ativated: 0,
+                    admin: 0,
                 });
 
                 if (token !== null) {

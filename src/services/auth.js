@@ -5,7 +5,7 @@ export function signIn() {
                 token: "1234567890",
                 user: { 
                     name: "Eduardo", 
-                    email: "eduagusto10@gmail.com", 
+                    email: "teste@teste.com", 
                 },
             });
         }, 2000);

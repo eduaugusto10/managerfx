@@ -16,16 +16,20 @@ function Settings() {
 
     async function handleChange() {
         setEntryBtn("Aguarde...");
-        console.log(user)
+        const data = new FormData();
+        data.append("first_name", names);
+        data.append("second_name", lastNames);
+        data.append("email", emails);
+        data.append("_method", "PUT");
         try {
-            await api.put(`/users/12`, {
-                first_name: names,
-                second_name: lastNames,
-                email: emails,
+            await api.put("/users/12", data).then(function (response) {
+                idMT5(idsMT5, name, lastName, email);
+                setEntryBtn("Salvo!");
+                console.log(response);
             });
-            idMT5(idsMT5, name, lastName, email);
         } catch (_err) {
             setEntryBtn("Confirmar");
+            console.log(_err);
         }
     }
     return (
@@ -49,7 +53,7 @@ function Settings() {
                         placeholder="Primeiro Nome"
                         placeholderTextColor="#FFFFFF"
                         value={names}
-                        onChange={(e) => setNames(e.target.value)}
+                        onChangeText={(e) => setNames(e)}
                     />
                 </View>
                 <View style={styles.inputView}>
@@ -64,7 +68,7 @@ function Settings() {
                         placeholder="Último Nome"
                         placeholderTextColor="#FFFFFF"
                         value={lastNames}
-                        onChange={(e) => setLastNames(e.target.value)}
+                        onChangeText={(e) => setLastNames(e)}
                     />
                 </View>
                 <View style={styles.inputView}>
@@ -79,15 +83,12 @@ function Settings() {
                         placeholder="E-mail"
                         placeholderTextColor="#FFFFFF"
                         value={emails}
-                        onChange={(e) => setEmails(e.target.value)}
+                        onChangeText={(e) => setEmails(e)}
                     />
                 </View>
             </View>
             <View style={styles.buttonView}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={handleChange}
-                >
+                <TouchableOpacity style={styles.button} onPress={handleChange}>
                     <Text style={styles.textButton}>{entryBTN}</Text>
                 </TouchableOpacity>
             </View>

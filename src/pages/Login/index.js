@@ -10,7 +10,7 @@ function Login({ navigation }) {
     const { signed, signIn, user, idMT5, idsMT5 } = useContext(AuthContext);
     const [entryBtn, setEntryBtn] = useState("Entrar");
     const [email, setEmail] = useState();
-    const [emailText, setEmailText] = useState("Insira seu ID");
+    const [emailText, setEmailText] = useState("Insira seu e-mail");
     const [ativated, setAtivated] = useState("0");
     const [password, setPassword] = useState();
     const [passwordText, setPasswordText] = useState("Insira sua senha");
@@ -31,6 +31,7 @@ function Login({ navigation }) {
         }
     };
     async function handleSignInPress() {
+        let ativateds = 0;
         if (email.length === 0 || password.length === 0) {
         } else {
             try {
@@ -44,6 +45,7 @@ function Login({ navigation }) {
                         if (response.data.user[0].ativated === "1") {
                             setToken(response.data.token);
                             setAtivated(response.data.user[0].ativated);
+                            ativateds = response.data.user[0].ativated;
                             idMT5(
                                 response.data.user[0].id_metatrader,
                                 response.data.user[0].first_name,
@@ -54,20 +56,19 @@ function Login({ navigation }) {
                         }
                     });
 
-                if (token !== null && ativated === "1") {
+                if (token !== null && ativateds === "1") {
                     storeData(token);
                     getData;
                     signIn();
-                    //navigation.push("Home");
                 } else {
                     setEntryBtn("Entrar");
                 }
             } catch (_err) {
                 console.log(_err);
                 setEmail("");
-                setEmailText("ID ou senha inválida");
+                setEmailText("E-mail ou senha inválida");
                 setPassword("");
-                setPasswordText("ID ou senha inválida");
+                setPasswordText("E-mail ou senha inválida");
                 setEntryBtn("Entrar");
             }
         }
