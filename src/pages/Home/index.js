@@ -22,7 +22,7 @@ function Home() {
                     return response.data;
                 });
             } catch (_err) {
-                console.log(_err);
+               // console.log(_err);
             }
         }
         async function Balance() {
@@ -38,7 +38,7 @@ function Home() {
                         setComission(response.data.comissions[0].sum);
                     });
             } catch (_err) {
-                console.log(_err);
+               // console.log(_err);
             }
         }
         async function Equity() {
@@ -49,7 +49,7 @@ function Home() {
                         setOrderOpen(response.data.equity);
                     });
             } catch (_err) {
-                console.log(_err);
+               // console.log(_err);
             }
         }
         ProfitPerMonth();

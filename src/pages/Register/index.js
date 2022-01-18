@@ -25,25 +25,22 @@ function Register({ navigation }) {
         } else {
             try {
                 setEntryBtn("Aguarde...");
-                await api.post("/users", {
-                    first_name: name,
-                    second_name: lastName,
-                    id_metatrader: id,
-                    email: email,
-                    question: question,
-                    answer: answer,
-                    password: password,
-                    id_adm: pamm,
-                    ativated: 0,
-                    admin: 0,
-                });
-
-                if (token !== null) {
-                    storeData(token);
-                    getData;
-                    signIn();
-                    navigation.push("Login");
-                }
+                await api
+                    .post("/users", {
+                        first_name: name,
+                        second_name: lastName,
+                        id_metatrader: id,
+                        email: email,
+                        question: question,
+                        answer: answer,
+                        password: password,
+                        id_adm: pamm,
+                        ativated: 0,
+                        admin: 0,
+                    })
+                    .then((result) => {                        
+                        navigation.push("Login");
+                    });
             } catch (_err) {
                 console.log(_err);
                 setEmail("");

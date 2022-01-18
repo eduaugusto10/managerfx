@@ -21,7 +21,7 @@ function OrdersOpen() {
                         setAllOrders(response.data.allOrders);
                     });
             } catch (_err) {
-                console.log(_err);
+                //(_err);
             }
         }
         OrderOpen();

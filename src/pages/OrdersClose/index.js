@@ -25,15 +25,14 @@ function OrdersClose() {
                         setLoading(false);
                     });
             } catch (_err) {
-                console.log(_err);
+                //(_err);
             }
         }
         apiOrdersClose();
     }, []);
 
     async function loadOrders() {
-        if (loading === true) return;
-        console.log("Passou por aqui!");
+        if (loading === true) return;        
         setLoading(true);
         try {
             await api
@@ -45,7 +44,7 @@ function OrdersClose() {
                     setLoading(false);
                 });
         } catch (_err) {
-            console.log(_err);
+           // console.log(_err);
         }
     }
 

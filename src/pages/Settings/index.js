@@ -29,7 +29,7 @@ function Settings() {
             });
         } catch (_err) {
             setEntryBtn("Confirmar");
-            console.log(_err);
+            //console.log(_err);
         }
     }
     return (

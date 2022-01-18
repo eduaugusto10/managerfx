@@ -15,6 +15,7 @@ function Login({ navigation }) {
     const [password, setPassword] = useState();
     const [passwordText, setPasswordText] = useState("Insira sua senha");
     const [token, setToken] = useState();
+    const [mesage,setMesage] = useState("")
     const storeData = async (value) => {
         try {
             await AsyncStorage.setItem("@token_managerfx", value);
@@ -64,7 +65,7 @@ function Login({ navigation }) {
                     setEntryBtn("Entrar");
                 }
             } catch (_err) {
-                console.log(_err);
+               // console.log(_err);
                 setEmail("");
                 setEmailText("E-mail ou senha inválida");
                 setPassword("");

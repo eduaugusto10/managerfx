@@ -17,7 +17,7 @@ function Evolution() {
                     return response.data;
                 });
             } catch (_err) {
-                console.log(_err);
+                //console.log(_err);
             }
         }
         ProfitPerMonth();
