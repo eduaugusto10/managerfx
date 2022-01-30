@@ -25,7 +25,6 @@ function Settings() {
             await api.put("/users/12", data).then(function (response) {
                 idMT5(idsMT5, name, lastName, email);
                 setEntryBtn("Salvo!");
-                console.log(response);
             });
         } catch (_err) {
             setEntryBtn("Confirmar");

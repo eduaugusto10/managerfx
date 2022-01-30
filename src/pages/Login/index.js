@@ -65,7 +65,7 @@ function Login({ navigation }) {
                     setEntryBtn("Entrar");
                 }
             } catch (_err) {
-               // console.log(_err);
+                console.log(_err);
                 setEmail("");
                 setEmailText("E-mail ou senha inválida");
                 setPassword("");

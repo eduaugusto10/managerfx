@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 import styles from "./style";
 import api from "../../services/api";
 import AuthContext from "../../context/auth";
-import LineChartExample from "../../components/Graph";
+import GraphValues from "../../components/GraphValues"
 
 function Home() {
     const { idsMT5, idADM } = useContext(AuthContext);
@@ -13,16 +13,22 @@ function Home() {
     const [lucro, setLucro] = useState(0);
     const [orderOpen, setOrderOpen] = useState(0);
     const [comission, setComission] = useState(0);
+    const [sumTotal, setSumTotal] = useState(0);
 
     useEffect(() => {
         async function ProfitPerMonth() {
             try {
                 await api.get(`/month/${idsMT5}`).then(function (response) {
                     setProfitPerMonth(response.data);
+                    let sum = 0;
+                    for (let i = 0; i < response.data.length; i++) {
+                        sum = parseFloat(response.data.balances[i].sum) + sum;
+                    }
+                    setSumTotal(sum);
                     return response.data;
                 });
             } catch (_err) {
-               // console.log(_err);
+                // console.log(_err);
             }
         }
         async function Balance() {
@@ -38,7 +44,7 @@ function Home() {
                         setComission(response.data.comissions[0].sum);
                     });
             } catch (_err) {
-               // console.log(_err);
+                // console.log(_err);
             }
         }
         async function Equity() {
@@ -49,17 +55,18 @@ function Home() {
                         setOrderOpen(response.data.equity);
                     });
             } catch (_err) {
-               // console.log(_err);
+                // console.log(_err);
             }
         }
         ProfitPerMonth();
         Balance();
         Equity();
-    }, [capitalInvestido, saldo]);
+    }, [capitalInvestido, saldo, sumTotal]);
 
     function capitalCalculated() {
         const capital = (
-            parseFloat(saldo) +
+            parseFloat(capitalInvestido) +
+            parseFloat(sumTotal) +
             parseFloat(orderOpen) +
             parseFloat(comission)
         ).toFixed(2);
@@ -77,7 +84,9 @@ function Home() {
             <View style={styles.cards}>
                 <View style={styles.cardBlue}>
                     <Text style={styles.textWhite}>Balance</Text>
-                    <Text style={styles.textWhiteValue}>${saldo}</Text>
+                    <Text style={styles.textWhiteValue}>
+                        ${(parseFloat(capitalInvestido) + parseFloat(sumTotal)).toFixed(2)}
+                    </Text>
                 </View>
                 <View style={styles.cardBlue}>
                     <Text style={styles.textWhite}>Capital Líquido</Text>
@@ -112,7 +121,7 @@ function Home() {
                     </Text>
                 </View>
             </View>
-            <LineChartExample text="GANHO ACUMULADO" data={profitPerMonth} />
+            <GraphValues text="GANHO ACUMULADO" data={profitPerMonth} />
         </View>
     );
 }

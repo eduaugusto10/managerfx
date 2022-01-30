@@ -3,7 +3,7 @@ import { View, Text, Dimensions } from "react-native";
 import { LineChart } from "expo-chart-kit";
 import styles from "./style";
 
-export function AreaChartExample(props) {
+export function GraphValues(props) {
     const length = props.data.length;
     const screenWidth = Dimensions.get("window").width;
     const month = [
@@ -23,23 +23,11 @@ export function AreaChartExample(props) {
     ];
 
     function SumBalance(number) {
-        let sum = parseFloat(props.data.deposits[0].sum);
-        let lastSum = parseFloat(props.data.deposits[0].sum);
-        let finalSum = 0;
+        let sum = 0
         for (let i = 0; i < number; i++) {
-           /* if (
-                props.data.balances[i].year === props.data.deposits[0].year &&
-                props.data.balances[i].month === props.data.deposits[0].month
-            ) {
-                console.log("========== ENTROU ===============");
-                lastSum = parseFloat(props.data.deposits[0].sum) + lastSum;
-                sum = parseFloat(props.data.deposits[0].sum) + sum;
-            }*/
-            sum = parseFloat(props.data.balances[i + 1].sum) + sum;
-            lastSum = parseFloat(props.data.balances[i].sum) + lastSum;
-            finalSum = (((sum / lastSum) - 1) * 100) + finalSum;
+            sum = parseFloat(props.data.balances[i].sum) + sum;
         }
-        return finalSum;
+        return sum;
     }
 
     return (
@@ -126,4 +114,4 @@ export function AreaChartExample(props) {
     );
 }
 
-export default AreaChartExample;
+export default GraphValues;
