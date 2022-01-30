@@ -43,5 +43,17 @@ export default StyleSheet.create({
     columncenter: {
         marginRight: 15,
         marginLeft: 15,
-    }
+    },
+    buy: {
+        fontSize: 12,
+        textAlign: "center",
+        color: "#00C900",
+        fontWeight: "bold",
+    },
+    sell: {
+        fontSize: 12,
+        textAlign: "center",
+        color: "#FF0000",
+        fontWeight: "bold",
+    },
 });
