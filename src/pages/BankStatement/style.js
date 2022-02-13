@@ -7,6 +7,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         textAlign: "center",
         backgroundColor: "#FFF",
+        
     },
     item: {
         //padding: 20,
@@ -35,7 +36,7 @@ export default StyleSheet.create({
     card: {
         flexWrap: "wrap",
         flexDirection: "row",
-        height: 40,
+        height: 44,
         marginTop: 15,
         marginLeft: 35,
         marginRight: 17,

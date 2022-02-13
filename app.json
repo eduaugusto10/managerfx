@@ -2,7 +2,7 @@
     "expo": {
         "name": "ManagerFX",
         "slug": "managerfx",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "splash": {
@@ -17,7 +17,7 @@
         "ios": {
             "supportsTablet": false,
             "bundleIdentifier": "com.managerfx.managerfx",
-            "buildNumber": "1.0.2"
+            "buildNumber": "1.0.3"
         },
         "android": {
             "package": "com.managerfx.managerfx",

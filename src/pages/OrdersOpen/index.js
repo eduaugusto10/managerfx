@@ -48,10 +48,10 @@ function OrdersOpen() {
                     <Text style={styles.title}>{item.symbol}</Text>
                     <Text
                         style={
-                            item.operation_type > 0 ? styles.buy : styles.sell
+                            item.operation_type > 0 ? styles.sell : styles.buy
                         }
                     >
-                        {item.operation_type > 0 ? "BUY" : "SELL"}
+                        {item.operation_type > 0 ? "SELL" : "BUY"}
                     </Text>
                 </View>
                 <View style={styles.columncenter}>

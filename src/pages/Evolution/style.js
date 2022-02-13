@@ -6,4 +6,11 @@ export default StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#FFF",
     },
+    buttons:{
+        flexDirection:"row",
+        paddingLeft: 20,
+        paddingRight: 20,
+        backgroundColor:"#d4d4d4",
+        justifyContent: "space-between"
+    }
 });

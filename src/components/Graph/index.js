@@ -1,11 +1,18 @@
-import React from "react";
-import { View, Text, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import { LineChart } from "expo-chart-kit";
 import styles from "./style";
 
 export function AreaChartExample(props) {
     const length = props.data.length;
     const screenWidth = Dimensions.get("window").width;
+    const [variable, setVariable] = useState(0);
+    const onPressPlus = () =>
+        variable == length - 12
+            ? length - 1
+            : setVariable((prevCount) => prevCount + 1);
+    const onPressMinus = () =>
+        variable == 0 ? 0 : setVariable((prevCount) => prevCount - 1);
     const month = [
         "",
         "Jan",
@@ -27,17 +34,9 @@ export function AreaChartExample(props) {
         let lastSum = parseFloat(props.data.deposits[0].sum);
         let finalSum = 0;
         for (let i = 0; i < number; i++) {
-           /* if (
-                props.data.balances[i].year === props.data.deposits[0].year &&
-                props.data.balances[i].month === props.data.deposits[0].month
-            ) {
-                console.log("========== ENTROU ===============");
-                lastSum = parseFloat(props.data.deposits[0].sum) + lastSum;
-                sum = parseFloat(props.data.deposits[0].sum) + sum;
-            }*/
             sum = parseFloat(props.data.balances[i + 1].sum) + sum;
             lastSum = parseFloat(props.data.balances[i].sum) + lastSum;
-            finalSum = (((sum / lastSum) - 1) * 100) + finalSum;
+            finalSum = (sum / lastSum - 1) * 100 + finalSum;
         }
         return finalSum;
     }
@@ -47,49 +46,94 @@ export function AreaChartExample(props) {
             <View style={styles.card}>
                 <Text style={styles.title}>{props.text}</Text>
             </View>
+            <View style={styles.buttons}>
+                <TouchableOpacity onPress={onPressPlus}>
+                    <Text style={styles.title}>{" << "}</Text>
+                </TouchableOpacity>
+                <Text style={styles.title}>{props.data.balances== undefined ? "Carregando":props.data.balances[length - 1 - variable].year}</Text>
+                <TouchableOpacity onPress={onPressMinus}>
+                    <Text style={styles.title}>{" >> "}</Text>
+                </TouchableOpacity>
+            </View>
             <LineChart
                 data={{
                     labels: [
                         props.data == 0
                             ? 0
-                            : length - 6 < 0
+                            : length - 12 - variable < 0
                             ? 0
-                            : month[props.data.balances[length - 6].month],
+                            : month[props.data.balances[length - 12 - variable].month],
                         props.data == 0
                             ? 0
-                            : length - 5 < 0
+                            : length - 11 - variable < 0
                             ? 0
-                            : month[props.data.balances[length - 5].month],
+                            : month[props.data.balances[length - 11 - variable].month],
                         props.data == 0
                             ? 0
-                            : length - 4 < 0
+                            : length - 10 - variable < 0
                             ? 0
-                            : month[props.data.balances[length - 4].month],
+                            : month[props.data.balances[length - 10 - variable].month],
                         props.data == 0
                             ? 0
-                            : length - 3 < 0
+                            : length - 9 - variable < 0
                             ? 0
-                            : month[props.data.balances[length - 3].month],
+                            : month[props.data.balances[length - 9 - variable].month],
                         props.data == 0
                             ? 0
-                            : length - 2 < 0
+                            : length - 8 - variable < 0
                             ? 0
-                            : month[props.data.balances[length - 2].month],
+                            : month[props.data.balances[length - 8 - variable].month],
                         props.data == 0
                             ? 0
-                            : length - 1 < 0
+                            : length - 7 - variable < 0
                             ? 0
-                            : month[props.data.balances[length - 1].month],
+                            : month[props.data.balances[length - 7 - variable].month],
+                        props.data == 0
+                            ? 0
+                            : length - 6 - variable < 0
+                            ? 0
+                            : month[props.data.balances[length - 6 - variable].month],
+                        props.data == 0
+                            ? 0
+                            : length - 5 - variable < 0
+                            ? 0
+                            : month[props.data.balances[length - 5 - variable].month],
+                        props.data == 0
+                            ? 0
+                            : length - 4 - variable < 0
+                            ? 0
+                            : month[props.data.balances[length - 4 - variable].month],
+                        props.data == 0
+                            ? 0
+                            : length - 3 - variable < 0
+                            ? 0
+                            : month[props.data.balances[length - 3 - variable].month],
+                        props.data == 0
+                            ? 0
+                            : length - 2 - variable < 0
+                            ? 0
+                            : month[props.data.balances[length - 2 - variable].month],
+                        props.data == 0
+                            ? 0
+                            : length - 1 - variable < 0
+                            ? 0
+                            : month[props.data.balances[length - 1 - variable].month],
                     ],
                     datasets: [
                         {
                             data: [
-                                props.data == 0 ? 0 : SumBalance(length - 6),
-                                props.data == 0 ? 0 : SumBalance(length - 5),
-                                props.data == 0 ? 0 : SumBalance(length - 4),
-                                props.data == 0 ? 0 : SumBalance(length - 3),
-                                props.data == 0 ? 0 : SumBalance(length - 2),
-                                props.data == 0 ? 0 : SumBalance(length - 1),
+                                props.data == 0 ? 0 : SumBalance(length - 12 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 11 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 10 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 9 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 8 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 7 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 6 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 5 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 4 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 3 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 2 - variable),
+                                props.data == 0 ? 0 : SumBalance(length - 1 - variable),
                             ],
                         },
                     ],

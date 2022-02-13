@@ -15,6 +15,12 @@ export default StyleSheet.create({
         color: "#245CA0",
         paddingTop: 20,
         paddingBottom: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
         fontWeight: "bold",
     },
+    buttons:{
+        flexDirection:"row",                
+        justifyContent: "space-between"
+    }
 });

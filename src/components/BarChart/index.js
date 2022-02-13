@@ -1,11 +1,18 @@
-import React from "react";
-import { View, Text, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import { BarChart } from "expo-chart-kit";
 import styles from "./style";
 
 export function BarsChart(props) {
     const screenWidth = Dimensions.get("window").width;
     const length = props.data.length;
+    const [variable, setVariable] = useState(0);
+    const onPressPlus = () =>
+        variable == length - 6
+            ? length - 1
+            : setVariable((prevCount) => prevCount + 1);
+    const onPressMinus = () =>
+        variable == 0 ? 0 : setVariable((prevCount) => prevCount - 1);
     const month = [
         "",
         "Jan",
@@ -21,66 +28,110 @@ export function BarsChart(props) {
         "Nov",
         "Dez",
     ];
+
+    function SumBalance(number) {
+        let sum = parseFloat(props.data.deposits[0].sum);
+        let lastSum = parseFloat(props.data.deposits[0].sum);
+        let finalSum = 0;
+        for (let i = 0; i < number; i++) {
+            sum = parseFloat(props.data.balances[i + 1].sum) + sum;
+            lastSum = parseFloat(props.data.balances[i].sum) + lastSum;
+        }
+        finalSum = (sum / lastSum - 1) * 100;
+        return finalSum;
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.card}>
                 <Text style={styles.title}>{props.text}</Text>
+            </View>
+            <View style={styles.buttons}>
+                <TouchableOpacity onPress={onPressPlus}>
+                    <Text style={styles.title}>{" << "}</Text>
+                </TouchableOpacity>
+                <Text style={styles.title}>
+                    {props.data.balances == undefined
+                        ? "Carregando"
+                        : props.data.balances[length - 1 - variable].year}
+                </Text>
+                <TouchableOpacity onPress={onPressMinus}>
+                    <Text style={styles.title}>{" >> "}</Text>
+                </TouchableOpacity>
             </View>
             <BarChart
                 data={{
                     labels: [
                         props.data == 0
                             ? 0
-                            : length-6<0 ? 0 : month[props.data.balances[length-6].month],
-                            props.data == 0
+                            : length - 6 - variable < 0
                             ? 0
-                            : length-5<0 ? 0 : month[props.data.balances[length-5].month],
-                            props.data == 0
+                            : month[
+                                  props.data.balances[length - 6 - variable]
+                                      .month
+                              ],
+                        props.data == 0
                             ? 0
-                            : length-4<0 ? 0 : month[props.data.balances[length-4].month],
-                            props.data == 0
+                            : length - 5 - variable < 0
                             ? 0
-                            : length-3<0 ? 0 : month[props.data.balances[length-3].month],
-                            props.data == 0
+                            : month[
+                                  props.data.balances[length - 5 - variable]
+                                      .month
+                              ],
+                        props.data == 0
                             ? 0
-                            : length-2<0 ? 0 : month[props.data.balances[length-2].month],
-                            props.data == 0
+                            : length - 4 - variable < 0
                             ? 0
-                            : length-1<0 ? 0 : month[props.data.balances[length-1].month],
+                            : month[
+                                  props.data.balances[length - 4 - variable]
+                                      .month
+                              ],
+                        props.data == 0
+                            ? 0
+                            : length - 3 - variable < 0
+                            ? 0
+                            : month[
+                                  props.data.balances[length - 3 - variable]
+                                      .month
+                              ],
+                        props.data == 0
+                            ? 0
+                            : length - 2 - variable < 0
+                            ? 0
+                            : month[
+                                  props.data.balances[length - 2 - variable]
+                                      .month
+                              ],
+                        props.data == 0
+                            ? 0
+                            : length - 1 - variable < 0
+                            ? 0
+                            : month[
+                                  props.data.balances[length - 1 - variable]
+                                      .month
+                              ],
                     ],
                     datasets: [
                         {
                             data: [
                                 props.data == 0
                                     ? 0
-                                    : parseFloat(
-                                        length-6<0 ? 0 : props.data.balances[length - 6].sum
-                                      ),
+                                    : SumBalance(length - 6 - variable),
                                 props.data == 0
                                     ? 0
-                                    : parseFloat(
-                                        length-5<0 ? 0 : props.data.balances[length - 5].sum
-                                      ),
+                                    : SumBalance(length - 5 - variable),
                                 props.data == 0
                                     ? 0
-                                    : parseFloat(
-                                        length-4<0 ? 0 : props.data.balances[length - 4].sum
-                                      ),
+                                    : SumBalance(length - 4 - variable),
                                 props.data == 0
                                     ? 0
-                                    : parseFloat(
-                                        length-3<0 ? 0 : props.data.balances[length - 3].sum
-                                      ),
+                                    : SumBalance(length - 3 - variable),
                                 props.data == 0
                                     ? 0
-                                    : parseFloat(
-                                        length-2<0 ? 0 : props.data.balances[length - 2].sum
-                                      ),
+                                    : SumBalance(length - 2 - variable),
                                 props.data == 0
                                     ? 0
-                                    : parseFloat(
-                                        length-1<0 ? 0 : props.data.balances[length - 1].sum
-                                      ),
+                                    : SumBalance(length - 1 - variable),
                             ],
                         },
                     ],

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./style";
 import api from "../../services/api";
 import AuthContext from "../../context/auth";
@@ -31,7 +31,15 @@ function Evolution() {
                 />
             </View>
             <View>
-                <BarChart text={"GANHO MENSAL"} data={profitPerMonth}/>
+                <BarChart text={"GANHO MENSAL"} data={profitPerMonth} />
+                <View style={styles.buttons}>
+                    <TouchableOpacity>
+                        <Text>{"<<"}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Text>{">>"}</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );

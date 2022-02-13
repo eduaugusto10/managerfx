@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 import styles from "./style";
 import api from "../../services/api";
 import AuthContext from "../../context/auth";
-import GraphValues from "../../components/GraphValues"
+import LineChartExample from "../../components/Graph";
 
 function Home() {
     const { idsMT5, idADM } = useContext(AuthContext);
@@ -20,15 +20,10 @@ function Home() {
             try {
                 await api.get(`/month/${idsMT5}`).then(function (response) {
                     setProfitPerMonth(response.data);
-                    let sum = 0;
-                    for (let i = 0; i < response.data.length; i++) {
-                        sum = parseFloat(response.data.balances[i].sum) + sum;
-                    }
-                    setSumTotal(sum);
                     return response.data;
                 });
             } catch (_err) {
-                // console.log(_err);
+                //console.log(_err);
             }
         }
         async function Balance() {
@@ -121,7 +116,7 @@ function Home() {
                     </Text>
                 </View>
             </View>
-            <GraphValues text="GANHO ACUMULADO" data={profitPerMonth} />
+            <LineChartExample text="GANHO ACUMULADO" data={profitPerMonth} />
         </View>
     );
 }

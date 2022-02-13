@@ -51,7 +51,7 @@ function Extract() {
                                 : styles.sell
                         }
                     >
-                        $ {item.return_profit}
+                        $ {parseFloat(item.return_profit).toFixed(2)}
                     </Text>
                 </View>
             </View>
